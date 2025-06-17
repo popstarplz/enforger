@@ -1,81 +1,112 @@
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { Menu, X, Terminal } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="bg-black border-b-2 border-primary sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-black border-b border-primary font-mono">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-primary rounded-sm flex items-center justify-center">
-              <span className="text-black font-bold text-lg">E</span>
-            </div>
-            <span className="text-primary font-heading font-bold text-2xl">Enforger</span>
+            <Terminal className="h-6 w-6 text-primary" />
+            <span className="text-primary font-bold text-xl">ENFORGER</span>
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-white hover:text-primary transition-colors font-body">
-              Home
+            <Link 
+              to="/" 
+              className="text-primary/80 hover:text-primary transition-colors"
+            >
+              $ ./home
             </Link>
-            <Link to="/services" className="text-white hover:text-primary transition-colors font-body">
-              Services
+            <Link 
+              to="/services" 
+              className="text-primary/80 hover:text-primary transition-colors"
+            >
+              $ ./services
             </Link>
-            <Link to="/templates" className="text-white hover:text-primary transition-colors font-body">
-              Templates
+            <Link 
+              to="/templates" 
+              className="text-primary/80 hover:text-primary transition-colors"
+            >
+              $ ./templates
             </Link>
-            <Link to="/faq" className="text-white hover:text-primary transition-colors font-body">
-              FAQ
-            </Link>
+          </nav>
+
+          {/* CTA Buttons */}
+          <div className="hidden md:flex items-center space-x-4">
             <Button 
               asChild
-              className="bg-primary text-black hover:bg-primary/90 font-semibold"
+              variant="outline"
+              className="border-primary text-primary hover:bg-primary hover:text-black font-mono"
             >
-              <Link to="/order">Get Started</Link>
+              <Link to="/login">$ login</Link>
             </Button>
-          </nav>
+            <Button 
+              asChild
+              className="bg-primary text-black hover:bg-primary/90 font-mono font-bold"
+            >
+              <Link to="/order">$ start_order</Link>
+            </Button>
+          </div>
 
           {/* Mobile Menu Button */}
           <button
             className="md:hidden text-primary"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
-            </svg>
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Menu */}
         {isMenuOpen && (
-          <nav className="md:hidden mt-4 pb-4 border-t border-primary/20">
-            <div className="flex flex-col space-y-4 pt-4">
-              <Link to="/" className="text-white hover:text-primary transition-colors font-body">
-                Home
-              </Link>
-              <Link to="/services" className="text-white hover:text-primary transition-colors font-body">
-                Services
-              </Link>
-              <Link to="/templates" className="text-white hover:text-primary transition-colors font-body">
-                Templates
-              </Link>
-              <Link to="/faq" className="text-white hover:text-primary transition-colors font-body">
-                FAQ
-              </Link>
-              <Button 
-                asChild
-                className="bg-primary text-black hover:bg-primary/90 font-semibold w-fit"
+          <div className="md:hidden border-t border-primary/30 bg-black">
+            <nav className="flex flex-col space-y-4 p-4">
+              <Link 
+                to="/" 
+                className="text-primary/80 hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
               >
-                <Link to="/order">Get Started</Link>
-              </Button>
-            </div>
-          </nav>
+                $ ./home
+              </Link>
+              <Link 
+                to="/services" 
+                className="text-primary/80 hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                $ ./services
+              </Link>
+              <Link 
+                to="/templates" 
+                className="text-primary/80 hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                $ ./templates
+              </Link>
+              <div className="flex flex-col space-y-2 pt-4 border-t border-primary/30">
+                <Button 
+                  asChild
+                  variant="outline"
+                  className="border-primary text-primary hover:bg-primary hover:text-black font-mono"
+                >
+                  <Link to="/login">$ login</Link>
+                </Button>
+                <Button 
+                  asChild
+                  className="bg-primary text-black hover:bg-primary/90 font-mono font-bold"
+                >
+                  <Link to="/order">$ start_order</Link>
+                </Button>
+              </div>
+            </nav>
+          </div>
         )}
       </div>
     </header>

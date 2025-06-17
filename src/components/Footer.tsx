@@ -1,70 +1,86 @@
 
+import { Terminal, Github, Twitter, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="bg-black border-t-2 border-primary mt-20">
+    <footer className="bg-black border-t border-primary font-mono">
       <div className="container mx-auto px-4 py-12">
+        {/* Terminal Header */}
+        <div className="text-primary/80 text-sm mb-6">$ cat /system/footer.conf</div>
+        
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
-          <div className="col-span-1 md:col-span-2">
+          <div>
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-primary rounded-sm flex items-center justify-center">
-                <span className="text-black font-bold text-lg">E</span>
-              </div>
-              <span className="text-primary font-heading font-bold text-2xl">Enforger</span>
+              <Terminal className="h-6 w-6 text-primary" />
+              <span className="text-primary font-bold text-xl">ENFORGER</span>
             </div>
-            <p className="text-gray-300 font-body mb-4 max-w-md">
-              Professional identity documents made simple. Secure, reliable, and customizable solutions for all your document needs.
-            </p>
-            <div className="flex space-x-4">
-              <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                <span className="text-primary text-sm">🔒</span>
-              </div>
-              <span className="text-gray-400 text-sm font-body">Secure Checkout</span>
+            <div className="text-primary/60 text-sm space-y-1">
+              <div># Professional document creation</div>
+              <div># Secure • Fast • Reliable</div>
+              <div># System uptime: 99.9%</div>
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Services */}
           <div>
-            <h3 className="text-primary font-heading font-semibold mb-4">Quick Links</h3>
-            <div className="space-y-2">
-              <Link to="/services" className="block text-gray-300 hover:text-primary transition-colors font-body">
-                Services
+            <div className="text-primary font-bold mb-4">SERVICES/</div>
+            <div className="space-y-2 text-sm">
+              <Link to="/services" className="block text-primary/60 hover:text-primary transition-colors">
+                $ custom_creation
               </Link>
-              <Link to="/templates" className="block text-gray-300 hover:text-primary transition-colors font-body">
-                Templates
+              <Link to="/templates" className="block text-primary/60 hover:text-primary transition-colors">
+                $ diy_templates
               </Link>
-              <Link to="/order" className="block text-gray-300 hover:text-primary transition-colors font-body">
-                Order Now
-              </Link>
-              <Link to="/faq" className="block text-gray-300 hover:text-primary transition-colors font-body">
-                FAQ
+              <Link to="/bulk" className="block text-primary/60 hover:text-primary transition-colors">
+                $ bulk_orders
               </Link>
             </div>
           </div>
 
-          {/* Legal */}
+          {/* Support */}
           <div>
-            <h3 className="text-primary font-heading font-semibold mb-4">Legal</h3>
-            <div className="space-y-2">
-              <Link to="/terms" className="block text-gray-300 hover:text-primary transition-colors font-body">
-                Terms of Service
+            <div className="text-primary font-bold mb-4">SUPPORT/</div>
+            <div className="space-y-2 text-sm">
+              <Link to="/help" className="block text-primary/60 hover:text-primary transition-colors">
+                $ help_docs
               </Link>
-              <Link to="/privacy" className="block text-gray-300 hover:text-primary transition-colors font-body">
-                Privacy Policy
+              <Link to="/faq" className="block text-primary/60 hover:text-primary transition-colors">
+                $ faq
               </Link>
-              <Link to="/contact" className="block text-gray-300 hover:text-primary transition-colors font-body">
-                Contact
+              <Link to="/contact" className="block text-primary/60 hover:text-primary transition-colors">
+                $ contact_support
               </Link>
+            </div>
+          </div>
+
+          {/* System Info */}
+          <div>
+            <div className="text-primary font-bold mb-4">SYSTEM/</div>
+            <div className="space-y-2 text-sm text-primary/60">
+              <div>VERSION: v2.1.0</div>
+              <div>BUILD: 2024.12.17</div>
+              <div>STATUS: ONLINE</div>
+              <div className="flex space-x-4 mt-4">
+                <Github className="h-4 w-4 hover:text-primary cursor-pointer transition-colors" />
+                <Twitter className="h-4 w-4 hover:text-primary cursor-pointer transition-colors" />
+                <Mail className="h-4 w-4 hover:text-primary cursor-pointer transition-colors" />
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-primary/20 mt-8 pt-8 text-center">
-          <p className="text-gray-400 font-body">
-            © 2024 Enforger. All rights reserved.
-          </p>
+        {/* Bottom Bar */}
+        <div className="border-t border-primary/30 mt-8 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center text-sm text-primary/60">
+            <div>© 2024 ENFORGER. All rights reserved. | System secured.</div>
+            <div className="flex space-x-6 mt-4 md:mt-0">
+              <Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+              <Link to="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
+              <Link to="/security" className="hover:text-primary transition-colors">Security</Link>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

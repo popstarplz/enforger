@@ -5,123 +5,115 @@ import { Link } from 'react-router-dom';
 
 const ServicesOverview = () => {
   return (
-    <section className="py-20 bg-black">
+    <section className="py-20 bg-gray-950 font-mono">
       <div className="container mx-auto px-4">
+        {/* Terminal Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-heading font-bold text-white mb-4">
-            Choose Your <span className="text-primary">Approach</span>
+          <div className="text-primary/80 mb-2">$ cat /services/overview.txt</div>
+          <h2 className="text-4xl font-bold text-primary mb-4">
+            &gt; SERVICE_MODULES_LOADED
           </h2>
-          <p className="text-xl text-gray-300 font-body max-w-2xl mx-auto">
-            Whether you want us to handle everything or prefer to do it yourself, 
-            we have the perfect solution for your document needs.
-          </p>
+          <div className="text-primary/80 max-w-2xl mx-auto">
+            [INFO] Two primary execution paths available:<br />
+            [1] CUSTOM_CREATION: Full-service document generation<br />
+            [2] DIY_TEMPLATES: Self-service template distribution
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {/* Custom Document Creation */}
-          <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-primary/30 hover:border-primary/50 transition-all duration-300 group">
-            <CardContent className="p-8 text-center">
-              <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:animate-pulse">
-                <span className="text-3xl">🎨</span>
-              </div>
-              
-              <h3 className="text-2xl font-heading font-bold text-white mb-4">
-                Custom Document Creation
+          {/* Custom Service */}
+          <Card className="bg-black border-primary/50 hover:border-primary transition-all duration-300">
+            <CardContent className="p-8">
+              <div className="text-primary/80 text-sm mb-2">$ ./execute custom_service.sh</div>
+              <h3 className="text-2xl font-bold text-primary mb-4">
+                CUSTOM_CREATION_MODULE
               </h3>
               
-              <p className="text-gray-300 font-body mb-6 text-lg">
-                Let us handle the details—provide your info, and we'll craft a polished, 
-                professional document tailored to your exact specifications.
-              </p>
-              
-              <div className="mb-6">
-                <span className="text-primary font-heading font-bold text-xl">
-                  Starting at $25
-                </span>
-                <span className="text-gray-400 font-body ml-2">per document</span>
+              <div className="text-primary/80 mb-6 space-y-2">
+                <div># Professional document generation service</div>
+                <div># Input: Your specifications</div>
+                <div># Output: Ready-to-use documents</div>
+                <div># Processing time: &lt;24 hours</div>
               </div>
 
-              <ul className="text-left text-gray-300 font-body mb-8 space-y-2">
-                <li className="flex items-center">
-                  <span className="text-primary mr-2">✓</span>
-                  Professional design and layout
-                </li>
-                <li className="flex items-center">
-                  <span className="text-primary mr-2">✓</span>
-                  High-quality materials and printing
-                </li>
-                <li className="flex items-center">
-                  <span className="text-primary mr-2">✓</span>
-                  Fast turnaround (2-3 business days)
-                </li>
-                <li className="flex items-center">
-                  <span className="text-primary mr-2">✓</span>
-                  Revision support included
-                </li>
-              </ul>
-              
+              <div className="bg-gray-900 border border-primary/30 p-4 mb-6">
+                <div className="text-primary/60 text-sm">FEATURES:</div>
+                <ul className="text-primary/80 space-y-1 text-sm mt-2">
+                  <li>+ Custom design integration</li>
+                  <li>+ Photo/logo embedding</li>
+                  <li>+ Security features</li>
+                  <li>+ Professional quality output</li>
+                </ul>
+              </div>
+
               <Button 
                 asChild
-                size="lg"
-                className="bg-primary text-black hover:bg-primary/90 font-heading font-semibold w-full"
+                className="bg-primary text-black hover:bg-primary/90 font-mono font-bold w-full"
               >
-                <Link to="/order">Order Now</Link>
+                <Link to="/order">$ ./initiate_custom_order.sh</Link>
               </Button>
             </CardContent>
           </Card>
 
           {/* DIY Templates */}
-          <Card className="bg-gradient-to-br from-gray-900 to-black border-primary/20 hover:border-primary/40 transition-all duration-300 group">
-            <CardContent className="p-8 text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:animate-pulse">
-                <span className="text-3xl">🛠️</span>
-              </div>
-              
-              <h3 className="text-2xl font-heading font-bold text-white mb-4">
-                DIY Templates
+          <Card className="bg-black border-primary/50 hover:border-primary transition-all duration-300">
+            <CardContent className="p-8">
+              <div className="text-primary/80 text-sm mb-2">$ ./execute template_service.sh</div>
+              <h3 className="text-2xl font-bold text-primary mb-4">
+                DIY_TEMPLATE_MODULE
               </h3>
               
-              <p className="text-gray-300 font-body mb-6 text-lg">
-                Want full control? Purchase our professionally designed templates 
-                and customize them yourself with your preferred editing software.
-              </p>
-              
-              <div className="mb-6">
-                <span className="text-primary font-heading font-bold text-xl">
-                  Starting at $7.99
-                </span>
-                <span className="text-gray-400 font-body ml-2">per template</span>
+              <div className="text-primary/80 mb-6 space-y-2">
+                <div># Self-service template distribution</div>
+                <div># Input: Template selection + payment</div>
+                <div># Output: Editable document files</div>
+                <div># Processing time: Instant download</div>
               </div>
 
-              <ul className="text-left text-gray-300 font-body mb-8 space-y-2">
-                <li className="flex items-center">
-                  <span className="text-primary mr-2">✓</span>
-                  Instant download after purchase
-                </li>
-                <li className="flex items-center">
-                  <span className="text-primary mr-2">✓</span>
-                  Editable PDF and PSD formats
-                </li>
-                <li className="flex items-center">
-                  <span className="text-primary mr-2">✓</span>
-                  Print-ready high resolution
-                </li>
-                <li className="flex items-center">
-                  <span className="text-primary mr-2">✓</span>
-                  Lifetime access to downloads
-                </li>
-              </ul>
-              
+              <div className="bg-gray-900 border border-primary/30 p-4 mb-6">
+                <div className="text-primary/60 text-sm">FEATURES:</div>
+                <ul className="text-primary/80 space-y-1 text-sm mt-2">
+                  <li>+ Instant download access</li>
+                  <li>+ Fully editable formats</li>
+                  <li>+ Print-ready resolution</li>
+                  <li>+ Multiple file formats</li>
+                </ul>
+              </div>
+
               <Button 
                 asChild
-                size="lg"
                 variant="outline"
-                className="border-primary text-primary hover:bg-primary hover:text-black font-heading font-semibold w-full"
+                className="border-primary text-primary hover:bg-primary hover:text-black font-mono font-bold w-full"
               >
-                <Link to="/templates">Browse Templates</Link>
+                <Link to="/templates">$ ./browse_templates.sh</Link>
               </Button>
             </CardContent>
           </Card>
+        </div>
+
+        {/* Status Display */}
+        <div className="mt-16 text-center">
+          <div className="bg-black border border-primary/30 p-6 max-w-2xl mx-auto">
+            <div className="text-primary/80 text-sm mb-2">$ system_status --verbose</div>
+            <div className="grid grid-cols-2 gap-4 text-sm">
+              <div>
+                <span className="text-primary/60">UPTIME:</span>
+                <span className="text-primary ml-2">99.9%</span>
+              </div>
+              <div>
+                <span className="text-primary/60">ORDERS_PROCESSED:</span>
+                <span className="text-primary ml-2">10,000+</span>
+              </div>
+              <div>
+                <span className="text-primary/60">TEMPLATES_AVAILABLE:</span>
+                <span className="text-primary ml-2">50+</span>
+              </div>
+              <div>
+                <span className="text-primary/60">AVG_DELIVERY:</span>
+                <span className="text-primary ml-2">&lt;12h</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
