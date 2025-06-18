@@ -1,15 +1,17 @@
 
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { User } from '@supabase/supabase-js';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Bitcoin, DollarSign, Wallet, Shield } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import BalanceCard from '@/components/topup/BalanceCard';
+import AmountSelection from '@/components/topup/AmountSelection';
+import CryptoSelection from '@/components/topup/CryptoSelection';
+import PaymentDetails from '@/components/topup/PaymentDetails';
 
 const TopUp = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -19,13 +21,6 @@ const TopUp = () => {
   const [paymentAddress, setPaymentAddress] = useState<string>('');
   const [balance, setBalance] = useState<number>(0);
   const { toast } = useToast();
-
-  const topUpAmounts = [10, 15, 20, 40, 100, 200];
-  const cryptoCurrencies = [
-    { value: 'BTC', label: 'Bitcoin', icon: '₿', color: 'text-orange-400' },
-    { value: 'LTC', label: 'Litecoin', icon: 'Ł', color: 'text-blue-400' },
-    { value: 'USDT', label: 'Tether', icon: '₮', color: 'text-green-400' }
-  ];
 
   useEffect(() => {
     checkUser();
@@ -133,71 +128,19 @@ const TopUp = () => {
           <h1 className="text-3xl font-bold text-green-500">Account Top-Up</h1>
         </div>
 
-        {/* Balance Card */}
-        <Card className="bg-gray-900/50 backdrop-blur-sm border-green-500/30 mb-8">
-          <CardHeader>
-            <CardTitle className="flex items-center text-green-400">
-              <Wallet className="w-5 h-5 mr-2" />
-              Current Balance
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-green-500">${balance.toFixed(2)}</div>
-          </CardContent>
-        </Card>
+        <BalanceCard balance={balance} />
 
         {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Amount Selection */}
-          <Card className="bg-gray-900/50 backdrop-blur-sm border-green-500/30">
-            <CardHeader>
-              <CardTitle className="text-green-400">Select Amount</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 gap-3">
-                {topUpAmounts.map((amount) => (
-                  <Button
-                    key={amount}
-                    onClick={() => setSelectedAmount(amount)}
-                    variant={selectedAmount === amount ? "default" : "outline"}
-                    className={`${
-                      selectedAmount === amount
-                        ? "bg-green-500 text-black"
-                        : "bg-transparent border-green-500/50 text-green-400 hover:bg-green-500/10 hover:border-green-400"
-                    } transition-all duration-300`}
-                  >
-                    ${amount}
-                  </Button>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Crypto Selection */}
-          <Card className="bg-gray-900/50 backdrop-blur-sm border-green-500/30">
-            <CardHeader>
-              <CardTitle className="text-green-400">Payment Method</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Select value={selectedCrypto} onValueChange={setSelectedCrypto}>
-                <SelectTrigger className="bg-black/50 border-green-500/50 text-green-400 hover:border-green-400">
-                  <SelectValue placeholder="Select cryptocurrency" />
-                </SelectTrigger>
-                <SelectContent className="bg-gray-900 border-green-500/50">
-                  {cryptoCurrencies.map((crypto) => (
-                    <SelectItem 
-                      key={crypto.value} 
-                      value={crypto.value}
-                      className="text-green-400 hover:bg-green-500/20 focus:bg-green-500/20"
-                    >
-                      <span className={`${crypto.color} mr-2`}>{crypto.icon}</span>
-                      {crypto.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </CardContent>
-          </Card>
+          <AmountSelection 
+            selectedAmount={selectedAmount}
+            onAmountSelect={setSelectedAmount}
+          />
+          
+          <CryptoSelection 
+            selectedCrypto={selectedCrypto}
+            onCryptoSelect={setSelectedCrypto}
+          />
         </div>
 
         {/* Generate Payment Button */}
@@ -211,40 +154,11 @@ const TopUp = () => {
           </Button>
         </div>
 
-        {/* Payment Details */}
-        {paymentAddress && (
-          <Card className="bg-gray-900/70 backdrop-blur-sm border-green-500/50 mt-8">
-            <CardHeader>
-              <CardTitle className="flex items-center text-green-400">
-                <Shield className="w-5 h-5 mr-2" />
-                Payment Details
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <span className="text-green-400/70">Amount:</span>
-                  <span className="ml-2 text-green-400 font-semibold">${selectedAmount} USD</span>
-                </div>
-                <div>
-                  <span className="text-green-400/70">Currency:</span>
-                  <span className="ml-2 text-green-400 font-semibold">{selectedCrypto}</span>
-                </div>
-              </div>
-              
-              <div>
-                <span className="text-green-400/70 text-sm">Payment Address:</span>
-                <div className="mt-2 p-4 bg-black/50 border border-green-500/30 rounded-lg">
-                  <code className="text-green-400 break-all text-sm font-mono">{paymentAddress}</code>
-                </div>
-              </div>
-              
-              <div className="text-green-400/60 text-sm p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
-                ⚠️ Send exactly ${selectedAmount} worth of {selectedCrypto} to this address. Your account will be credited once confirmed.
-              </div>
-            </CardContent>
-          </Card>
-        )}
+        <PaymentDetails 
+          selectedAmount={selectedAmount}
+          selectedCrypto={selectedCrypto}
+          paymentAddress={paymentAddress}
+        />
       </div>
       
       <Footer />
