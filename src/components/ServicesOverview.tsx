@@ -2,118 +2,108 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
+import { FileText, Download, Zap, Shield } from 'lucide-react';
 
 const ServicesOverview = () => {
   return (
-    <section className="py-20 bg-gray-950 font-mono">
-      <div className="container mx-auto px-4">
-        {/* Terminal Header */}
+    <section className="py-20 bg-gradient-to-b from-black to-gray-900 relative">
+      {/* Background Effects */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-green-500/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-green-500/10 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
-          <div className="text-primary/80 mb-2">$ cat /services/overview.txt</div>
-          <h2 className="text-4xl font-bold text-primary mb-4">
-            &gt; SERVICE_MODULES_LOADED
+          <h2 className="text-4xl font-bold text-green-500 mb-4 glow-text">
+            Choose Your Service
           </h2>
-          <div className="text-primary/80 max-w-2xl mx-auto">
-            [INFO] Two primary execution paths available:<br />
-            [1] CUSTOM_CREATION: Full-service document generation<br />
-            [2] DIY_TEMPLATES: Self-service template distribution
-          </div>
+          <p className="text-green-400/80 text-lg max-w-2xl mx-auto">
+            Professional document creation with two distinct approaches
+          </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {/* Custom Service */}
-          <Card className="bg-black border-primary/50 hover:border-primary transition-all duration-300">
+          <Card className="bg-gray-900/50 backdrop-blur-sm border-green-500/30 hover:border-green-500/60 transition-all duration-300 group">
             <CardContent className="p-8">
-              <div className="text-primary/80 text-sm mb-2">$ ./execute custom_service.sh</div>
-              <h3 className="text-2xl font-bold text-primary mb-4">
-                CUSTOM_CREATION_MODULE
-              </h3>
-              
-              <div className="text-primary/80 mb-6 space-y-2">
-                <div># Professional document generation service</div>
-                <div># Input: Your specifications</div>
-                <div># Output: Ready-to-use documents</div>
-                <div># Processing time: &lt;24 hours</div>
+              <div className="flex items-center mb-4">
+                <FileText className="w-8 h-8 text-green-500 mr-3" />
+                <h3 className="text-2xl font-bold text-green-400">Custom Creation</h3>
               </div>
+              
+              <p className="text-green-400/70 mb-6">
+                Professional document generation service tailored to your exact specifications
+              </p>
 
-              <div className="bg-gray-900 border border-primary/30 p-4 mb-6">
-                <div className="text-primary/60 text-sm">FEATURES:</div>
-                <ul className="text-primary/80 space-y-1 text-sm mt-2">
-                  <li>+ Custom design integration</li>
-                  <li>+ Photo/logo embedding</li>
-                  <li>+ Security features</li>
-                  <li>+ Professional quality output</li>
-                </ul>
+              <div className="space-y-3 mb-6">
+                <div className="flex items-center text-sm">
+                  <Shield className="w-4 h-4 text-green-500 mr-2" />
+                  <span className="text-green-400/80">Custom design integration</span>
+                </div>
+                <div className="flex items-center text-sm">
+                  <Shield className="w-4 h-4 text-green-500 mr-2" />
+                  <span className="text-green-400/80">Photo & logo embedding</span>
+                </div>
+                <div className="flex items-center text-sm">
+                  <Shield className="w-4 h-4 text-green-500 mr-2" />
+                  <span className="text-green-400/80">Security features</span>
+                </div>
+                <div className="flex items-center text-sm">
+                  <Shield className="w-4 h-4 text-green-500 mr-2" />
+                  <span className="text-green-400/80">Professional quality</span>
+                </div>
               </div>
 
               <Button 
                 asChild
-                className="bg-primary text-black hover:bg-primary/90 font-mono font-bold w-full"
+                className="bg-green-500 text-black hover:bg-green-400 font-bold w-full transition-all duration-300 group-hover:shadow-lg group-hover:shadow-green-500/25"
               >
-                <Link to="/order">$ ./initiate_custom_order.sh</Link>
+                <Link to="/order">Start Custom Order</Link>
               </Button>
             </CardContent>
           </Card>
 
           {/* DIY Templates */}
-          <Card className="bg-black border-primary/50 hover:border-primary transition-all duration-300">
+          <Card className="bg-gray-900/50 backdrop-blur-sm border-green-500/30 hover:border-green-500/60 transition-all duration-300 group">
             <CardContent className="p-8">
-              <div className="text-primary/80 text-sm mb-2">$ ./execute template_service.sh</div>
-              <h3 className="text-2xl font-bold text-primary mb-4">
-                DIY_TEMPLATE_MODULE
-              </h3>
-              
-              <div className="text-primary/80 mb-6 space-y-2">
-                <div># Self-service template distribution</div>
-                <div># Input: Template selection + payment</div>
-                <div># Output: Editable document files</div>
-                <div># Processing time: Instant download</div>
+              <div className="flex items-center mb-4">
+                <Download className="w-8 h-8 text-green-500 mr-3" />
+                <h3 className="text-2xl font-bold text-green-400">Template Download</h3>
               </div>
+              
+              <p className="text-green-400/70 mb-6">
+                Instant access to professionally designed templates for immediate download
+              </p>
 
-              <div className="bg-gray-900 border border-primary/30 p-4 mb-6">
-                <div className="text-primary/60 text-sm">FEATURES:</div>
-                <ul className="text-primary/80 space-y-1 text-sm mt-2">
-                  <li>+ Instant download access</li>
-                  <li>+ Fully editable formats</li>
-                  <li>+ Print-ready resolution</li>
-                  <li>+ Multiple file formats</li>
-                </ul>
+              <div className="space-y-3 mb-6">
+                <div className="flex items-center text-sm">
+                  <Zap className="w-4 h-4 text-green-500 mr-2" />
+                  <span className="text-green-400/80">Instant download</span>
+                </div>
+                <div className="flex items-center text-sm">
+                  <Zap className="w-4 h-4 text-green-500 mr-2" />
+                  <span className="text-green-400/80">Fully editable formats</span>
+                </div>
+                <div className="flex items-center text-sm">
+                  <Zap className="w-4 h-4 text-green-500 mr-2" />
+                  <span className="text-green-400/80">Print-ready resolution</span>
+                </div>
+                <div className="flex items-center text-sm">
+                  <Zap className="w-4 h-4 text-green-500 mr-2" />
+                  <span className="text-green-400/80">Multiple file formats</span>
+                </div>
               </div>
 
               <Button 
                 asChild
                 variant="outline"
-                className="border-primary text-primary hover:bg-primary hover:text-black font-mono font-bold w-full"
+                className="border-green-500/50 text-green-400 hover:bg-green-500/10 hover:border-green-400 w-full transition-all duration-300 group-hover:shadow-lg group-hover:shadow-green-500/25"
               >
-                <Link to="/templates">$ ./browse_templates.sh</Link>
+                <Link to="/templates">Browse Templates</Link>
               </Button>
             </CardContent>
           </Card>
-        </div>
-
-        {/* Status Display */}
-        <div className="mt-16 text-center">
-          <div className="bg-black border border-primary/30 p-6 max-w-2xl mx-auto">
-            <div className="text-primary/80 text-sm mb-2">$ system_status --verbose</div>
-            <div className="grid grid-cols-2 gap-4 text-sm">
-              <div>
-                <span className="text-primary/60">UPTIME:</span>
-                <span className="text-primary ml-2">99.9%</span>
-              </div>
-              <div>
-                <span className="text-primary/60">ORDERS_PROCESSED:</span>
-                <span className="text-primary ml-2">10,000+</span>
-              </div>
-              <div>
-                <span className="text-primary/60">TEMPLATES_AVAILABLE:</span>
-                <span className="text-primary ml-2">50+</span>
-              </div>
-              <div>
-                <span className="text-primary/60">AVG_DELIVERY:</span>
-                <span className="text-primary ml-2">&lt;12h</span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>

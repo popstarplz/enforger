@@ -2,116 +2,100 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
+import { Download, Star } from 'lucide-react';
 
 const FeaturedTemplates = () => {
   const templates = [
     {
       id: "STU_001",
-      name: "STUDENT_ID_TEMPLATE",
-      category: "EDUCATION",
+      name: "Student ID Template",
+      category: "Education",
       price: "$15",
-      status: "ACTIVE"
+      rating: 4.9
     },
     {
       id: "EMP_001", 
-      name: "EMPLOYEE_BADGE_TEMPLATE",
-      category: "CORPORATE",
+      name: "Employee Badge Template",
+      category: "Corporate",
       price: "$20",
-      status: "ACTIVE"
+      rating: 4.8
     },
     {
       id: "MEM_001",
-      name: "MEMBERSHIP_CARD_TEMPLATE", 
-      category: "ORGANIZATION",
+      name: "Membership Card Template", 
+      category: "Organization",
       price: "$12",
-      status: "ACTIVE"
+      rating: 4.9
     },
     {
       id: "EVT_001",
-      name: "EVENT_BADGE_TEMPLATE",
-      category: "EVENTS", 
+      name: "Event Badge Template",
+      category: "Events", 
       price: "$10",
-      status: "ACTIVE"
+      rating: 4.7
     }
   ];
 
   return (
-    <section className="py-20 bg-black font-mono">
+    <section className="py-20 bg-black relative">
       <div className="container mx-auto px-4">
-        {/* Terminal Header */}
         <div className="text-center mb-16">
-          <div className="text-primary/80 mb-2">$ ls /templates/featured/ --details</div>
-          <h2 className="text-4xl font-bold text-primary mb-4">
-            FEATURED_TEMPLATES/
+          <h2 className="text-4xl font-bold text-green-500 mb-4 glow-text">
+            Featured Templates
           </h2>
-          <div className="text-primary/80">
-            [INFO] Displaying most popular template files<br />
-            [STATUS] All templates verified and ready for download
-          </div>
+          <p className="text-green-400/80 text-lg">
+            Popular templates ready for instant download
+          </p>
         </div>
 
-        {/* Template Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {templates.map((template) => (
-            <Card key={template.id} className="bg-gray-950 border-primary/30 hover:border-primary transition-all duration-300">
+            <Card key={template.id} className="bg-gray-900/50 backdrop-blur-sm border-green-500/30 hover:border-green-500/60 transition-all duration-300 group">
               <CardContent className="p-6">
-                <div className="text-primary/60 text-xs mb-2">FILE: {template.id}</div>
-                <h3 className="text-primary font-bold text-sm mb-2">{template.name}</h3>
+                <div className="text-green-400/60 text-xs mb-2">{template.id}</div>
+                <h3 className="text-green-400 font-bold text-sm mb-2 line-clamp-2">{template.name}</h3>
                 
                 <div className="space-y-2 text-xs mb-4">
                   <div className="flex justify-between">
-                    <span className="text-primary/60">CATEGORY:</span>
-                    <span className="text-primary">{template.category}</span>
+                    <span className="text-green-400/60">Category:</span>
+                    <span className="text-green-400">{template.category}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-primary/60">PRICE:</span>
-                    <span className="text-primary">{template.price}</span>
+                    <span className="text-green-400/60">Price:</span>
+                    <span className="text-green-400 font-semibold">{template.price}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-primary/60">STATUS:</span>
-                    <span className="text-green-400">{template.status}</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-green-400/60">Rating:</span>
+                    <div className="flex items-center">
+                      <Star className="w-3 h-3 text-green-400 fill-current mr-1" />
+                      <span className="text-green-400">{template.rating}</span>
+                    </div>
                   </div>
                 </div>
 
                 <Button 
                   asChild
                   size="sm"
-                  className="bg-primary text-black hover:bg-primary/90 font-mono font-bold w-full text-xs"
+                  className="bg-green-500 text-black hover:bg-green-400 font-bold w-full text-xs transition-all duration-300 group-hover:shadow-lg group-hover:shadow-green-500/25"
                 >
-                  <Link to="/templates">$ download</Link>
+                  <Link to="/templates">
+                    <Download className="w-3 h-3 mr-1" />
+                    Download
+                  </Link>
                 </Button>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        {/* Command Output */}
-        <div className="bg-gray-950 border border-primary/30 p-6 max-w-4xl mx-auto">
-          <div className="text-primary/80 text-sm mb-4">$ template_stats --summary</div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
-            <div>
-              <div className="text-primary/60 mb-1">TOTAL_TEMPLATES:</div>
-              <div className="text-primary text-2xl font-bold">50+</div>
-            </div>
-            <div>
-              <div className="text-primary/60 mb-1">DOWNLOADS_TODAY:</div>
-              <div className="text-primary text-2xl font-bold">127</div>
-            </div>
-            <div>
-              <div className="text-primary/60 mb-1">AVG_RATING:</div>
-              <div className="text-primary text-2xl font-bold">4.9/5</div>
-            </div>
-          </div>
-          
-          <div className="mt-6 text-center">
-            <Button 
-              asChild
-              variant="outline"
-              className="border-primary text-primary hover:bg-primary hover:text-black font-mono font-bold"
-            >
-              <Link to="/templates">$ ./browse_all_templates.sh</Link>
-            </Button>
-          </div>
+        <div className="text-center">
+          <Button 
+            asChild
+            variant="outline"
+            className="border-green-500/50 text-green-400 hover:bg-green-500/10 hover:border-green-400 font-bold px-8 py-3"
+          >
+            <Link to="/templates">View All Templates</Link>
+          </Button>
         </div>
       </div>
     </section>

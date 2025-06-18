@@ -3,180 +3,124 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { Shield, Zap, Lock } from 'lucide-react';
 
 const HeroSection = () => {
   const [documentType, setDocumentType] = useState('');
   const [serviceType, setServiceType] = useState('');
 
   const documentTypes = [
-    { value: 'student-id', label: 'student_id.doc' },
-    { value: 'employee-badge', label: 'employee_badge.doc' },
-    { value: 'membership-card', label: 'membership_card.doc' },
-    { value: 'event-badge', label: 'event_badge.doc' },
-    { value: 'certificate', label: 'certificate.doc' },
-    { value: 'business-card', label: 'business_card.doc' }
+    { value: 'student-id', label: 'Student ID' },
+    { value: 'employee-badge', label: 'Employee Badge' },
+    { value: 'membership-card', label: 'Membership Card' },
+    { value: 'event-badge', label: 'Event Badge' },
+    { value: 'certificate', label: 'Certificate' },
+    { value: 'business-card', label: 'Business Card' }
   ];
 
   const serviceTypes = [
-    { value: 'custom', label: 'custom_creation.exe' },
-    { value: 'template', label: 'template_download.exe' }
+    { value: 'custom', label: 'Custom Creation' },
+    { value: 'template', label: 'Template Download' }
   ];
 
   return (
-    <>
-      <section className="min-h-screen bg-black text-primary font-mono flex items-center justify-center px-4">
-        <div className="max-w-4xl w-full">
-          {/* Terminal Window */}
-          <div className="border border-primary bg-black mb-8">
-            {/* Terminal Header */}
-            <div className="bg-primary text-black px-4 py-2 flex items-center">
-              <div className="flex space-x-2 mr-4">
-                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-              </div>
-              <span className="font-bold">root@enforger:~#</span>
+    <section className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-green-400 flex items-center justify-center px-4 relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-green-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-green-500/5 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="max-w-4xl w-full relative z-10">
+        {/* Main Content */}
+        <div className="text-center mb-12">
+          <h1 className="text-5xl md:text-7xl font-bold text-green-500 mb-6 glow-text">
+            ENFORGER
+          </h1>
+          <p className="text-xl md:text-2xl text-green-400/80 mb-8 max-w-2xl mx-auto">
+            Professional document generation with unmatched security
+          </p>
+        </div>
+
+        {/* Configuration Panel */}
+        <div className="bg-gray-900/50 backdrop-blur-sm border border-green-500/30 rounded-lg p-8 mb-8 shadow-2xl">
+          <h2 className="text-2xl font-bold text-green-400 mb-6 text-center">Configure Your Order</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div>
+              <label className="text-green-400/80 text-sm block mb-3">Document Type</label>
+              <Select value={documentType} onValueChange={setDocumentType}>
+                <SelectTrigger className="bg-black/50 border-green-500/50 text-green-400 hover:border-green-400 transition-colors">
+                  <SelectValue placeholder="Select document type" />
+                </SelectTrigger>
+                <SelectContent className="bg-gray-900 border-green-500/50">
+                  {documentTypes.map((type) => (
+                    <SelectItem 
+                      key={type.value} 
+                      value={type.value}
+                      className="text-green-400 hover:bg-green-500/20 focus:bg-green-500/20"
+                    >
+                      {type.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
-            
-            <div className="p-6">
-              {/* Boot Sequence */}
-              <div className="mb-6 text-sm">
-                <div className="text-primary/80 mb-1">$ sudo ./boot_enforger.sh</div>
-                <div className="text-primary/60">
-                  [OK] Loading Enforger Document Generation System...<br />
-                  [OK] Initializing secure document protocols...<br />
-                  [OK] Authentication system: READY<br />
-                  [OK] Payment gateway: CONNECTED<br />
-                  <span className="text-primary animate-pulse">[READY] System operational. Awaiting commands...</span>
-                </div>
-              </div>
 
-              <h1 className="text-4xl md:text-6xl font-bold text-primary mb-4 typewriter">
-                &gt; ENFORGER_TERMINAL
-              </h1>
-              
-              <div className="text-primary/90 text-lg mb-8 leading-relaxed">
-                <div className="mb-2">// Professional document generation system</div>
-                <div className="mb-2">// Access Level: ROOT | Status: ONLINE</div>
-                <div>// Select parameters and execute</div>
-              </div>
-
-              {/* Command Interface */}
-              <div className="bg-gray-900 border border-primary/30 p-6 mb-6">
-                <div className="text-primary mb-4 flex items-center">
-                  <span className="text-primary/60">root@enforger:~#</span>
-                  <span className="ml-2">configure_document --interactive</span>
-                  <span className="animate-pulse ml-1">_</span>
-                </div>
-                
-                <div className="space-y-4 ml-6">
-                  <div>
-                    <label className="text-primary/80 text-sm block mb-2">--document-type:</label>
-                    <Select value={documentType} onValueChange={setDocumentType}>
-                      <SelectTrigger className="bg-black border-primary text-primary font-mono">
-                        <SelectValue placeholder="[SELECT DOCUMENT TYPE]" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-black border-primary">
-                        {documentTypes.map((type) => (
-                          <SelectItem 
-                            key={type.value} 
-                            value={type.value}
-                            className="text-primary hover:bg-primary hover:text-black font-mono"
-                          >
-                            {type.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <label className="text-primary/80 text-sm block mb-2">--service-mode:</label>
-                    <Select value={serviceType} onValueChange={setServiceType}>
-                      <SelectTrigger className="bg-black border-primary text-primary font-mono">
-                        <SelectValue placeholder="[SELECT SERVICE MODE]" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-black border-primary">
-                        {serviceTypes.map((service) => (
-                          <SelectItem 
-                            key={service.value} 
-                            value={service.value}
-                            className="text-primary hover:bg-primary hover:text-black font-mono"
-                          >
-                            {service.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div className="mt-6 ml-6">
-                  <div className="text-primary/60 text-sm mb-3">
-                    $ Parameters: {documentType || '[UNSET]'} | {serviceType || '[UNSET]'}
-                  </div>
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <Button 
-                      asChild
-                      className="bg-primary text-black hover:bg-primary/90 font-mono font-bold border-2 border-primary"
-                      disabled={!documentType || !serviceType}
+            <div>
+              <label className="text-green-400/80 text-sm block mb-3">Service Mode</label>
+              <Select value={serviceType} onValueChange={setServiceType}>
+                <SelectTrigger className="bg-black/50 border-green-500/50 text-green-400 hover:border-green-400 transition-colors">
+                  <SelectValue placeholder="Select service mode" />
+                </SelectTrigger>
+                <SelectContent className="bg-gray-900 border-green-500/50">
+                  {serviceTypes.map((service) => (
+                    <SelectItem 
+                      key={service.value} 
+                      value={service.value}
+                      className="text-green-400 hover:bg-green-500/20 focus:bg-green-500/20"
                     >
-                      <Link to="/services">$ ./execute --now</Link>
-                    </Button>
-                    
-                    <Button 
-                      asChild
-                      variant="outline"
-                      className="border-primary text-primary hover:bg-primary hover:text-black font-mono font-bold"
-                    >
-                      <Link to="/services">$ ./show_options --all</Link>
-                    </Button>
-                  </div>
-                </div>
-              </div>
-
-              {/* System Status */}
-              <div className="text-primary/60 text-sm bg-gray-900 border border-primary/30 p-4">
-                <div className="text-primary/80 mb-2">$ system_status --verbose</div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                  <div>STATUS: {documentType && serviceType ? 'READY_TO_EXECUTE' : 'AWAITING_PARAMETERS'}</div>
-                  <div>UPTIME: 99.9% | SECURE: TRUE</div>
-                  <div>ACTIVE_SESSIONS: 1,247 | QUEUE: 0</div>
-                  <div>LAST_UPDATE: {new Date().toLocaleTimeString()}</div>
-                </div>
-              </div>
+                      {service.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
-          {/* System Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {[
-              { label: 'DOCS_GENERATED', value: '10,247', status: 'ACTIVE' },
-              { label: 'SUCCESS_RATE', value: '99.9%', status: 'OPTIMAL' },
-              { label: 'AVG_EXEC_TIME', value: '<12h', status: 'FAST' }
-            ].map((stat, index) => (
-              <div key={index} className="border border-primary/30 bg-black p-4">
-                <div className="text-primary/80 text-sm">$ query {stat.label.toLowerCase()}</div>
-                <div className="text-primary text-2xl font-bold">{stat.value}</div>
-                <div className="text-primary/60 text-xs">[{stat.status}]</div>
-              </div>
-            ))}
+          <div className="text-center">
+            <Button 
+              asChild
+              className="bg-green-500 text-black hover:bg-green-400 font-bold px-8 py-3 text-lg transition-all duration-300 hover:shadow-lg hover:shadow-green-500/25"
+              disabled={!documentType || !serviceType}
+            >
+              <Link to="/services">Generate Document</Link>
+            </Button>
           </div>
         </div>
-      </section>
 
-      <style>{`
-        .typewriter {
-          border-right: 2px solid #00FF00;
-          animation: blink 1s infinite;
-        }
-        
-        @keyframes blink {
-          0%, 50% { border-color: #00FF00; }
-          51%, 100% { border-color: transparent; }
-        }
-      `}</style>
-    </>
+        {/* Features */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="text-center p-6 bg-gray-900/30 backdrop-blur-sm border border-green-500/20 rounded-lg hover:border-green-500/50 transition-all duration-300">
+            <Shield className="w-8 h-8 text-green-500 mx-auto mb-3" />
+            <h3 className="text-lg font-bold text-green-400 mb-2">Secure</h3>
+            <p className="text-green-400/70 text-sm">Military-grade encryption</p>
+          </div>
+          
+          <div className="text-center p-6 bg-gray-900/30 backdrop-blur-sm border border-green-500/20 rounded-lg hover:border-green-500/50 transition-all duration-300">
+            <Zap className="w-8 h-8 text-green-500 mx-auto mb-3" />
+            <h3 className="text-lg font-bold text-green-400 mb-2">Fast</h3>
+            <p className="text-green-400/70 text-sm">Delivered within hours</p>
+          </div>
+          
+          <div className="text-center p-6 bg-gray-900/30 backdrop-blur-sm border border-green-500/20 rounded-lg hover:border-green-500/50 transition-all duration-300">
+            <Lock className="w-8 h-8 text-green-500 mx-auto mb-3" />
+            <h3 className="text-lg font-bold text-green-400 mb-2">Private</h3>
+            <p className="text-green-400/70 text-sm">Zero data retention</p>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 
