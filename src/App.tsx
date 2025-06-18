@@ -4,6 +4,8 @@ import { Toaster } from '@/components/ui/toaster';
 import Index from '@/pages/Index';
 import Services from '@/pages/Services';
 import TopUp from '@/pages/TopUp';
+import Auth from '@/pages/Auth';
+import Order from '@/pages/Order';
 import NotFound from '@/pages/NotFound';
 
 function App() {
@@ -14,6 +16,8 @@ function App() {
           <Route path="/" element={<Index />} />
           <Route path="/services" element={<Services />} />
           <Route path="/topup" element={<TopUp />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/order" element={<Order />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Toaster />
