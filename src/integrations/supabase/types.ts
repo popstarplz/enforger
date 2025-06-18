@@ -9,7 +9,69 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      topup_transactions: {
+        Row: {
+          amount: number
+          coinbase_charge_id: string | null
+          created_at: string | null
+          crypto_currency: string
+          currency: string
+          id: string
+          payment_address: string | null
+          status: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          amount: number
+          coinbase_charge_id?: string | null
+          created_at?: string | null
+          crypto_currency: string
+          currency?: string
+          id?: string
+          payment_address?: string | null
+          status?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number
+          coinbase_charge_id?: string | null
+          created_at?: string | null
+          crypto_currency?: string
+          currency?: string
+          id?: string
+          payment_address?: string | null
+          status?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      user_balances: {
+        Row: {
+          balance: number | null
+          created_at: string | null
+          id: string
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          balance?: number | null
+          created_at?: string | null
+          id?: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          balance?: number | null
+          created_at?: string | null
+          id?: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
