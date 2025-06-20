@@ -6,6 +6,7 @@ import Services from '@/pages/Services';
 import TopUp from '@/pages/TopUp';
 import Auth from '@/pages/Auth';
 import Order from '@/pages/Order';
+import DriversLicense from '@/pages/DriversLicense';
 import NotFound from '@/pages/NotFound';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/topup" element={<TopUp />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/order" element={<Order />} />
+          <Route path="/driverslicense" element={<DriversLicense />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Toaster />

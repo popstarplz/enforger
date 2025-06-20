@@ -9,32 +9,12 @@ import { Shield, Zap, FileText, Users, Building, CreditCard, Calendar } from 'lu
 const Services = () => {
   const customServices = [
     {
-      name: "Identity Cards",
-      description: "Professional identification documents with advanced security features",
-      price: "$25",
+      name: "US State Drivers License",
+      description: "Professional state identification documents with advanced security features",
+      price: "$45",
       icon: Shield,
-      features: ["Security integration", "Photo embedding", "Encrypted data", "Professional finish"]
-    },
-    {
-      name: "Access Badges",
-      description: "Corporate and institutional access control solutions",
-      price: "$30",
-      icon: Building,
-      features: ["Access protocols", "Department coding", "Security levels", "Instant activation"]
-    },
-    {
-      name: "Membership Cards",
-      description: "Exclusive membership identification systems",
-      price: "$20",
-      icon: Users,
-      features: ["Custom encoding", "Member verification", "Expiration protocols", "Multiple formats"]
-    },
-    {
-      name: "Event Passes",
-      description: "Conference and event authentication systems",
-      price: "$15",
-      icon: Calendar,
-      features: ["Event protocols", "Role verification", "Network access", "Rapid deployment"]
+      features: ["All 50 states available", "Security integration", "Photo embedding", "Professional finish"],
+      link: "/driverslicense"
     }
   ];
 
@@ -61,7 +41,7 @@ const Services = () => {
           </div>
         </section>
 
-        {/* Custom Services */}
+        {/* Custom Documents */}
         <section className="py-20 bg-gradient-to-b from-black to-gray-950 relative">
           <div className="absolute inset-0 opacity-5">
             <div className="absolute top-1/3 left-1/3 w-72 h-72 bg-green-500/20 rounded-full blur-3xl"></div>
@@ -70,14 +50,14 @@ const Services = () => {
           <div className="container mx-auto px-4 relative z-10">
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold text-green-500 mb-4 glow-text">
-                Custom <span className="text-green-400">Creation</span>
+                Custom <span className="text-green-400">Documents</span>
               </h2>
               <p className="text-lg text-green-400/70 max-w-2xl mx-auto">
                 Professional document generation with advanced security protocols
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 gap-8 max-w-2xl mx-auto">
               {customServices.map((service, index) => (
                 <Card key={index} className="bg-gray-900/50 backdrop-blur-sm border-green-500/30 hover:border-green-500/60 transition-all duration-300 group">
                   <CardContent className="p-8">
@@ -110,21 +90,11 @@ const Services = () => {
                       asChild
                       className="bg-green-500 text-black hover:bg-green-400 font-bold w-full transition-all duration-300 group-hover:shadow-lg group-hover:shadow-green-500/25"
                     >
-                      <Link to="/order">Initialize Order</Link>
+                      <Link to={service.link}>Initialize Order</Link>
                     </Button>
                   </CardContent>
                 </Card>
               ))}
-            </div>
-
-            <div className="text-center mt-12">
-              <Button 
-                asChild
-                size="lg"
-                className="bg-green-500 text-black hover:bg-green-400 font-bold px-8 py-3 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/25"
-              >
-                <Link to="/order">Access System</Link>
-              </Button>
             </div>
           </div>
         </section>
