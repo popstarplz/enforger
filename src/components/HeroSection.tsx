@@ -1,26 +1,17 @@
 
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { Shield, Zap, Lock } from 'lucide-react';
+import { Shield, Zap, Lock, FileText } from 'lucide-react';
 
 const HeroSection = () => {
-  const [documentType, setDocumentType] = useState('');
-  const [serviceType, setServiceType] = useState('');
-
-  const documentTypes = [
-    { value: 'student-id', label: 'Student ID' },
-    { value: 'employee-badge', label: 'Employee Badge' },
-    { value: 'membership-card', label: 'Membership Card' },
-    { value: 'event-badge', label: 'Event Badge' },
-    { value: 'certificate', label: 'Certificate' },
-    { value: 'business-card', label: 'Business Card' }
-  ];
-
-  const serviceTypes = [
-    { value: 'custom', label: 'Custom Creation' },
-    { value: 'template', label: 'Template Download' }
+  const pricingOptions = [
+    {
+      name: "US State Drivers License",
+      price: "$45",
+      description: "Professional state identification documents with advanced security features",
+      features: ["All 50 states available", "Security integration", "Photo embedding", "Professional finish"],
+      link: "/driverslicense"
+    }
   ];
 
   return (
@@ -42,60 +33,40 @@ const HeroSection = () => {
           </p>
         </div>
 
-        {/* Configuration Panel */}
+        {/* Price Sheet */}
         <div className="bg-gray-900/50 backdrop-blur-sm border border-green-500/30 rounded-lg p-8 mb-8 shadow-2xl">
-          <h2 className="text-2xl font-bold text-green-400 mb-6 text-center">Configure Your Order</h2>
+          <h2 className="text-2xl font-bold text-green-400 mb-6 text-center">Document Options & Pricing</h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <div>
-              <label className="text-green-400/80 text-sm block mb-3">Document Type</label>
-              <Select value={documentType} onValueChange={setDocumentType}>
-                <SelectTrigger className="bg-black/50 border-green-500/50 text-green-400 hover:border-green-400 transition-colors">
-                  <SelectValue placeholder="Select document type" />
-                </SelectTrigger>
-                <SelectContent className="bg-gray-900 border-green-500/50">
-                  {documentTypes.map((type) => (
-                    <SelectItem 
-                      key={type.value} 
-                      value={type.value}
-                      className="text-green-400 hover:bg-green-500/20 focus:bg-green-500/20"
-                    >
-                      {type.label}
-                    </SelectItem>
+          <div className="space-y-6">
+            {pricingOptions.map((option, index) => (
+              <div key={index} className="bg-black/30 border border-green-500/20 rounded-lg p-6 hover:border-green-500/50 transition-all duration-300">
+                <div className="flex justify-between items-start mb-4">
+                  <div className="flex items-center">
+                    <FileText className="w-6 h-6 text-green-500 mr-3" />
+                    <h3 className="text-xl font-bold text-green-400">{option.name}</h3>
+                  </div>
+                  <span className="text-green-500 font-bold text-2xl">{option.price}</span>
+                </div>
+                
+                <p className="text-green-400/70 mb-4 text-sm">{option.description}</p>
+                
+                <div className="grid grid-cols-2 gap-2 mb-6">
+                  {option.features.map((feature, featureIndex) => (
+                    <div key={featureIndex} className="flex items-center text-green-400/80 text-sm">
+                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></div>
+                      {feature}
+                    </div>
                   ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <label className="text-green-400/80 text-sm block mb-3">Service Mode</label>
-              <Select value={serviceType} onValueChange={setServiceType}>
-                <SelectTrigger className="bg-black/50 border-green-500/50 text-green-400 hover:border-green-400 transition-colors">
-                  <SelectValue placeholder="Select service mode" />
-                </SelectTrigger>
-                <SelectContent className="bg-gray-900 border-green-500/50">
-                  {serviceTypes.map((service) => (
-                    <SelectItem 
-                      key={service.value} 
-                      value={service.value}
-                      className="text-green-400 hover:bg-green-500/20 focus:bg-green-500/20"
-                    >
-                      {service.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          <div className="text-center">
-            <Button 
-              asChild
-              className="bg-green-500 text-black hover:bg-green-400 font-bold px-8 py-3 text-lg transition-all duration-300 hover:shadow-lg hover:shadow-green-500/25"
-              disabled={!documentType || !serviceType}
-            >
-              <Link to="/services">Generate Document</Link>
-            </Button>
+                </div>
+                
+                <Button 
+                  asChild
+                  className="bg-green-500 text-black hover:bg-green-400 font-bold w-full transition-all duration-300 hover:shadow-lg hover:shadow-green-500/25"
+                >
+                  <Link to={option.link}>Initialize Order</Link>
+                </Button>
+              </div>
+            ))}
           </div>
         </div>
 
