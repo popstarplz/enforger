@@ -4,97 +4,113 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
+import { Shield, Zap, FileText, Users, Building, CreditCard, Calendar } from 'lucide-react';
 
 const Services = () => {
   const customServices = [
     {
-      name: "Student IDs",
-      description: "Professional student identification cards for schools and universities",
+      name: "Identity Cards",
+      description: "Professional identification documents with advanced security features",
       price: "$25",
-      features: ["Custom school branding", "Photo integration", "Security features", "Bulk discounts available"]
+      icon: Shield,
+      features: ["Security integration", "Photo embedding", "Encrypted data", "Professional finish"]
     },
     {
-      name: "Employee Badges",
-      description: "Corporate employee identification and access cards",
+      name: "Access Badges",
+      description: "Corporate and institutional access control solutions",
       price: "$30",
-      features: ["Company logo integration", "Department coding", "Access level indicators", "Professional finish"]
+      icon: Building,
+      features: ["Access protocols", "Department coding", "Security levels", "Instant activation"]
     },
     {
       name: "Membership Cards",
-      description: "Club and organization membership identification",
+      description: "Exclusive membership identification systems",
       price: "$20",
-      features: ["Custom design", "Member number integration", "Expiration dates", "Multiple formats"]
+      icon: Users,
+      features: ["Custom encoding", "Member verification", "Expiration protocols", "Multiple formats"]
     },
     {
-      name: "Event Badges",
-      description: "Conference, trade show, and event identification",
+      name: "Event Passes",
+      description: "Conference and event authentication systems",
       price: "$15",
-      features: ["Event branding", "Role indicators", "Networking features", "Quick turnaround"]
+      icon: Calendar,
+      features: ["Event protocols", "Role verification", "Network access", "Rapid deployment"]
     }
   ];
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-black text-green-400">
       <Header />
       
       <main className="pt-20">
         {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-br from-black via-gray-900 to-black">
-          <div className="container mx-auto px-4 text-center">
-            <h1 className="text-5xl md:text-6xl font-heading font-bold text-white mb-6">
-              Our <span className="text-primary">Services</span>
+        <section className="py-20 bg-gradient-to-br from-black via-gray-900 to-black relative overflow-hidden">
+          {/* Background Effects */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-green-500/20 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-green-500/10 rounded-full blur-3xl"></div>
+          </div>
+          
+          <div className="container mx-auto px-4 text-center relative z-10">
+            <h1 className="text-5xl md:text-6xl font-bold text-green-500 mb-6 glow-text">
+              System <span className="text-green-400">Access</span>
             </h1>
-            <p className="text-xl text-gray-300 font-body max-w-3xl mx-auto">
-              Professional document creation services tailored to your needs. 
-              Choose between our full-service custom creation or DIY template solutions.
+            <p className="text-xl text-green-400/80 max-w-3xl mx-auto leading-relaxed">
+              Advanced document creation protocols. Choose your access level.
             </p>
           </div>
         </section>
 
         {/* Custom Services */}
-        <section className="py-20 bg-gray-950">
-          <div className="container mx-auto px-4">
+        <section className="py-20 bg-gradient-to-b from-black to-gray-950 relative">
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute top-1/3 left-1/3 w-72 h-72 bg-green-500/20 rounded-full blur-3xl"></div>
+          </div>
+          
+          <div className="container mx-auto px-4 relative z-10">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-heading font-bold text-white mb-4">
-                Custom Document <span className="text-primary">Creation</span>
+              <h2 className="text-4xl font-bold text-green-500 mb-4 glow-text">
+                Custom <span className="text-green-400">Creation</span>
               </h2>
-              <p className="text-lg text-gray-300 font-body max-w-2xl mx-auto">
-                Let our experts handle everything. We'll create professional, 
-                high-quality documents based on your specifications.
+              <p className="text-lg text-green-400/70 max-w-2xl mx-auto">
+                Professional document generation with advanced security protocols
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
               {customServices.map((service, index) => (
-                <Card key={index} className="bg-black border-primary/20 hover:border-primary/50 transition-all duration-300">
+                <Card key={index} className="bg-gray-900/50 backdrop-blur-sm border-green-500/30 hover:border-green-500/60 transition-all duration-300 group">
                   <CardContent className="p-8">
-                    <div className="flex justify-between items-start mb-4">
-                      <h3 className="text-2xl font-heading font-bold text-white">
-                        {service.name}
-                      </h3>
-                      <span className="text-primary font-heading font-bold text-xl">
+                    <div className="flex justify-between items-start mb-6">
+                      <div className="flex items-center">
+                        <service.icon className="w-8 h-8 text-green-500 mr-3" />
+                        <h3 className="text-2xl font-bold text-green-400">
+                          {service.name}
+                        </h3>
+                      </div>
+                      <span className="text-green-500 font-bold text-xl">
                         {service.price}
                       </span>
                     </div>
                     
-                    <p className="text-gray-300 font-body mb-6">
+                    <p className="text-green-400/70 mb-6 leading-relaxed">
                       {service.description}
                     </p>
 
-                    <ul className="space-y-2 mb-6">
+                    <div className="space-y-3 mb-6">
                       {service.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-center text-gray-300 font-body">
-                          <span className="text-primary mr-2">✓</span>
+                        <div key={featureIndex} className="flex items-center text-green-400/80">
+                          <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
                           {feature}
-                        </li>
+                        </div>
                       ))}
-                    </ul>
+                    </div>
 
                     <Button 
                       asChild
-                      className="bg-primary text-black hover:bg-primary/90 font-semibold w-full"
+                      className="bg-green-500 text-black hover:bg-green-400 font-bold w-full transition-all duration-300 group-hover:shadow-lg group-hover:shadow-green-500/25"
                     >
-                      <Link to="/order">Order This Service</Link>
+                      <Link to="/order">Initialize Order</Link>
                     </Button>
                   </CardContent>
                 </Card>
@@ -105,60 +121,63 @@ const Services = () => {
               <Button 
                 asChild
                 size="lg"
-                className="bg-primary text-black hover:bg-primary/90 font-heading font-semibold"
+                className="bg-green-500 text-black hover:bg-green-400 font-bold px-8 py-3 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/25"
               >
-                <Link to="/order">Start Custom Order</Link>
+                <Link to="/order">Access System</Link>
               </Button>
             </div>
           </div>
         </section>
 
         {/* DIY Templates Section */}
-        <section className="py-20 bg-black">
-          <div className="container mx-auto px-4">
+        <section className="py-20 bg-gradient-to-b from-gray-950 to-black relative">
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute bottom-1/3 right-1/3 w-80 h-80 bg-green-500/15 rounded-full blur-3xl"></div>
+          </div>
+          
+          <div className="container mx-auto px-4 relative z-10">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-heading font-bold text-white mb-4">
-                DIY <span className="text-primary">Templates</span>
+              <h2 className="text-4xl font-bold text-green-500 mb-4 glow-text">
+                Template <span className="text-green-400">Access</span>
               </h2>
-              <p className="text-lg text-gray-300 font-body max-w-2xl mx-auto">
-                Prefer to do it yourself? Our professionally designed templates 
-                give you complete control over the customization process.
+              <p className="text-lg text-green-400/70 max-w-2xl mx-auto">
+                Direct access to encrypted template protocols for independent deployment
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-              <Card className="bg-gray-950 border-primary/20">
+              <Card className="bg-gray-900/50 backdrop-blur-sm border-green-500/30 hover:border-green-500/60 transition-all duration-300 group">
                 <CardContent className="p-8 text-center">
-                  <div className="text-4xl mb-4">📄</div>
-                  <h3 className="text-xl font-heading font-semibold text-white mb-2">
-                    Instant Download
+                  <Zap className="w-12 h-12 text-green-500 mx-auto mb-4" />
+                  <h3 className="text-xl font-bold text-green-400 mb-3">
+                    Instant Access
                   </h3>
-                  <p className="text-gray-300 font-body">
-                    Get your templates immediately after purchase
+                  <p className="text-green-400/70">
+                    Immediate template deployment upon verification
                   </p>
                 </CardContent>
               </Card>
 
-              <Card className="bg-gray-950 border-primary/20">
+              <Card className="bg-gray-900/50 backdrop-blur-sm border-green-500/30 hover:border-green-500/60 transition-all duration-300 group">
                 <CardContent className="p-8 text-center">
-                  <div className="text-4xl mb-4">🎨</div>
-                  <h3 className="text-xl font-heading font-semibold text-white mb-2">
-                    Fully Editable
+                  <FileText className="w-12 h-12 text-green-500 mx-auto mb-4" />
+                  <h3 className="text-xl font-bold text-green-400 mb-3">
+                    Full Control
                   </h3>
-                  <p className="text-gray-300 font-body">
-                    Customize every element to match your needs
+                  <p className="text-green-400/70">
+                    Complete customization access with encryption protocols
                   </p>
                 </CardContent>
               </Card>
 
-              <Card className="bg-gray-950 border-primary/20">
+              <Card className="bg-gray-900/50 backdrop-blur-sm border-green-500/30 hover:border-green-500/60 transition-all duration-300 group">
                 <CardContent className="p-8 text-center">
-                  <div className="text-4xl mb-4">🖨️</div>
-                  <h3 className="text-xl font-heading font-semibold text-white mb-2">
-                    Print Ready
+                  <Shield className="w-12 h-12 text-green-500 mx-auto mb-4" />
+                  <h3 className="text-xl font-bold text-green-400 mb-3">
+                    Secure Output
                   </h3>
-                  <p className="text-gray-300 font-body">
-                    High-resolution files ready for professional printing
+                  <p className="text-green-400/70">
+                    Professional-grade security for all generated documents
                   </p>
                 </CardContent>
               </Card>
@@ -169,9 +188,9 @@ const Services = () => {
                 asChild
                 size="lg"
                 variant="outline"
-                className="border-primary text-primary hover:bg-primary hover:text-black font-heading font-semibold"
+                className="border-green-500/50 text-green-400 hover:bg-green-500/10 hover:border-green-400 font-bold px-8 py-3 transition-all duration-300"
               >
-                <Link to="/templates">Browse All Templates</Link>
+                <Link to="/templates">Browse Templates</Link>
               </Button>
             </div>
           </div>
