@@ -26,8 +26,8 @@ const HeroSection = () => {
             </h1>
           </div>
           
-          <p className="text-xl md:text-2xl text-green-400/80 mb-12 max-w-2xl mx-auto">
-            Professional document generation with unmatched security
+          <p className="text-xl md:text-2xl text-green-400/80 mb-12 max-w-3xl mx-auto">
+            Professional document generation and DIY Templates for all your Identity Verification Needs
           </p>
           
           <div className="flex flex-col items-center space-y-4 max-w-xs mx-auto">
