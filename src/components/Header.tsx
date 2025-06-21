@@ -10,7 +10,11 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3">
-            <Terminal className="h-8 w-8 text-green-500 glow-green" />
+            <img 
+              src="/lovable-uploads/78e25b9c-bce0-4298-a89b-5237ee0fa826.png" 
+              alt="Enforger Logo" 
+              className="h-8 w-8"
+            />
             <span className="text-xl font-bold text-green-500 tracking-wider">ENFORGER</span>
           </Link>
 
