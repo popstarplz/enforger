@@ -8,9 +8,37 @@ const HeroSection = () => {
     {
       name: "US State Drivers License",
       price: "$45",
-      description: "Professional state identification documents with advanced security features",
-      features: ["All 50 states available", "Security integration", "Photo embedding", "Professional finish"],
       link: "/driverslicense"
+    },
+    {
+      name: "Bank Statements",
+      price: "$35",
+      link: "/services"
+    },
+    {
+      name: "Pay Stubs",
+      price: "$25",
+      link: "/services"
+    },
+    {
+      name: "Bills (electricity, gas, water, internet)",
+      price: "$20",
+      link: "/services"
+    },
+    {
+      name: "Credit Cards",
+      price: "$40",
+      link: "/services"
+    },
+    {
+      name: "USA Passport (2021)",
+      price: "$65",
+      link: "/services"
+    },
+    {
+      name: "Social Security Card",
+      price: "$30",
+      link: "/services"
     }
   ];
 
@@ -37,33 +65,22 @@ const HeroSection = () => {
         <div className="bg-gray-900/50 backdrop-blur-sm border border-green-500/30 rounded-lg p-8 mb-8 shadow-2xl">
           <h2 className="text-2xl font-bold text-green-400 mb-6 text-center">Document Options & Pricing</h2>
           
-          <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {pricingOptions.map((option, index) => (
-              <div key={index} className="bg-black/30 border border-green-500/20 rounded-lg p-6 hover:border-green-500/50 transition-all duration-300">
-                <div className="flex justify-between items-start mb-4">
+              <div key={index} className="bg-black/30 border border-green-500/20 rounded-lg p-4 hover:border-green-500/50 transition-all duration-300">
+                <div className="flex justify-between items-center mb-3">
                   <div className="flex items-center">
-                    <FileText className="w-6 h-6 text-green-500 mr-3" />
-                    <h3 className="text-xl font-bold text-green-400">{option.name}</h3>
+                    <FileText className="w-5 h-5 text-green-500 mr-2" />
+                    <h3 className="text-sm font-bold text-green-400">{option.name}</h3>
                   </div>
-                  <span className="text-green-500 font-bold text-2xl">{option.price}</span>
-                </div>
-                
-                <p className="text-green-400/70 mb-4 text-sm">{option.description}</p>
-                
-                <div className="grid grid-cols-2 gap-2 mb-6">
-                  {option.features.map((feature, featureIndex) => (
-                    <div key={featureIndex} className="flex items-center text-green-400/80 text-sm">
-                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></div>
-                      {feature}
-                    </div>
-                  ))}
+                  <span className="text-green-500 font-bold text-lg">{option.price}</span>
                 </div>
                 
                 <Button 
                   asChild
-                  className="bg-green-500 text-black hover:bg-green-400 font-bold w-full transition-all duration-300 hover:shadow-lg hover:shadow-green-500/25"
+                  className="bg-green-500 text-black hover:bg-green-400 font-bold w-full text-sm py-2 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/25"
                 >
-                  <Link to={option.link}>Initialize Order</Link>
+                  <Link to={option.link}>Order Now</Link>
                 </Button>
               </div>
             ))}
