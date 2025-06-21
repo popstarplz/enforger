@@ -10,11 +10,38 @@ const Services = () => {
   const customServices = [
     {
       name: "US State Drivers License",
-      description: "Professional state identification documents with advanced security features",
       price: "$45",
-      icon: Shield,
-      features: ["All 50 states available", "Security integration", "Photo embedding", "Professional finish"],
       link: "/driverslicense"
+    },
+    {
+      name: "Bank Statements",
+      price: "$35",
+      link: "/services"
+    },
+    {
+      name: "Pay Stubs",
+      price: "$25",
+      link: "/services"
+    },
+    {
+      name: "Bills (electricity, gas, water, internet)",
+      price: "$20",
+      link: "/services"
+    },
+    {
+      name: "Credit Cards",
+      price: "$40",
+      link: "/services"
+    },
+    {
+      name: "USA Passport (2021)",
+      price: "$65",
+      link: "/services"
+    },
+    {
+      name: "Social Security Card",
+      price: "$30",
+      link: "/services"
     }
   ];
 
@@ -57,43 +84,28 @@ const Services = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-8 max-w-2xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {customServices.map((service, index) => (
-                <Card key={index} className="bg-gray-900/50 backdrop-blur-sm border-green-500/30 hover:border-green-500/60 transition-all duration-300 group">
-                  <CardContent className="p-8">
-                    <div className="flex justify-between items-start mb-6">
-                      <div className="flex items-center">
-                        <service.icon className="w-8 h-8 text-green-500 mr-3" />
-                        <h3 className="text-2xl font-bold text-green-400">
-                          {service.name}
-                        </h3>
-                      </div>
-                      <span className="text-green-500 font-bold text-xl">
-                        {service.price}
-                      </span>
+                <div key={index} className="bg-gray-900/50 backdrop-blur-sm border border-green-500/30 rounded-lg p-6 hover:border-green-500/60 transition-all duration-300 group">
+                  <div className="flex justify-between items-center mb-4">
+                    <div className="flex items-center">
+                      <FileText className="w-6 h-6 text-green-500 mr-3" />
+                      <h3 className="text-lg font-bold text-green-400">
+                        {service.name}
+                      </h3>
                     </div>
-                    
-                    <p className="text-green-400/70 mb-6 leading-relaxed">
-                      {service.description}
-                    </p>
+                    <span className="text-green-500 font-bold text-xl">
+                      {service.price}
+                    </span>
+                  </div>
 
-                    <div className="space-y-3 mb-6">
-                      {service.features.map((feature, featureIndex) => (
-                        <div key={featureIndex} className="flex items-center text-green-400/80">
-                          <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-                          {feature}
-                        </div>
-                      ))}
-                    </div>
-
-                    <Button 
-                      asChild
-                      className="bg-green-500 text-black hover:bg-green-400 font-bold w-full transition-all duration-300 group-hover:shadow-lg group-hover:shadow-green-500/25"
-                    >
-                      <Link to={service.link}>Initialize Order</Link>
-                    </Button>
-                  </CardContent>
-                </Card>
+                  <Button 
+                    asChild
+                    className="bg-green-500 text-black hover:bg-green-400 font-bold w-full transition-all duration-300 group-hover:shadow-lg group-hover:shadow-green-500/25"
+                  >
+                    <Link to={service.link}>Initialize Order</Link>
+                  </Button>
+                </div>
               ))}
             </div>
           </div>

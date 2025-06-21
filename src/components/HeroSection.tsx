@@ -1,47 +1,9 @@
 
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { Shield, Zap, Lock, FileText } from 'lucide-react';
+import { Shield, Zap, Lock } from 'lucide-react';
 
 const HeroSection = () => {
-  const pricingOptions = [
-    {
-      name: "US State Drivers License",
-      price: "$45",
-      link: "/driverslicense"
-    },
-    {
-      name: "Bank Statements",
-      price: "$35",
-      link: "/services"
-    },
-    {
-      name: "Pay Stubs",
-      price: "$25",
-      link: "/services"
-    },
-    {
-      name: "Bills (electricity, gas, water, internet)",
-      price: "$20",
-      link: "/services"
-    },
-    {
-      name: "Credit Cards",
-      price: "$40",
-      link: "/services"
-    },
-    {
-      name: "USA Passport (2021)",
-      price: "$65",
-      link: "/services"
-    },
-    {
-      name: "Social Security Card",
-      price: "$30",
-      link: "/services"
-    }
-  ];
-
   return (
     <section className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-green-400 flex items-center justify-center px-4 relative overflow-hidden">
       {/* Background Effects */}
@@ -59,32 +21,14 @@ const HeroSection = () => {
           <p className="text-xl md:text-2xl text-green-400/80 mb-8 max-w-2xl mx-auto">
             Professional document generation with unmatched security
           </p>
-        </div>
-
-        {/* Price Sheet */}
-        <div className="bg-gray-900/50 backdrop-blur-sm border border-green-500/30 rounded-lg p-8 mb-8 shadow-2xl">
-          <h2 className="text-2xl font-bold text-green-400 mb-6 text-center">Document Options & Pricing</h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {pricingOptions.map((option, index) => (
-              <div key={index} className="bg-black/30 border border-green-500/20 rounded-lg p-4 hover:border-green-500/50 transition-all duration-300">
-                <div className="flex justify-between items-center mb-3">
-                  <div className="flex items-center">
-                    <FileText className="w-5 h-5 text-green-500 mr-2" />
-                    <h3 className="text-sm font-bold text-green-400">{option.name}</h3>
-                  </div>
-                  <span className="text-green-500 font-bold text-lg">{option.price}</span>
-                </div>
-                
-                <Button 
-                  asChild
-                  className="bg-green-500 text-black hover:bg-green-400 font-bold w-full text-sm py-2 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/25"
-                >
-                  <Link to={option.link}>Order Now</Link>
-                </Button>
-              </div>
-            ))}
-          </div>
+          <Button 
+            asChild
+            size="lg"
+            className="bg-green-500 text-black hover:bg-green-400 font-bold px-8 py-3 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/25"
+          >
+            <Link to="/services">Access System</Link>
+          </Button>
         </div>
 
         {/* Features */}
