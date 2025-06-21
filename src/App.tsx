@@ -7,6 +7,12 @@ import TopUp from '@/pages/TopUp';
 import Auth from '@/pages/Auth';
 import Order from '@/pages/Order';
 import DriversLicense from '@/pages/DriversLicense';
+import BankStatements from '@/pages/BankStatements';
+import PayStubs from '@/pages/PayStubs';
+import Bills from '@/pages/Bills';
+import CreditCards from '@/pages/CreditCards';
+import Passport from '@/pages/Passport';
+import SocialSecurity from '@/pages/SocialSecurity';
 import NotFound from '@/pages/NotFound';
 
 function App() {
@@ -20,6 +26,12 @@ function App() {
           <Route path="/auth" element={<Auth />} />
           <Route path="/order" element={<Order />} />
           <Route path="/driverslicense" element={<DriversLicense />} />
+          <Route path="/bankstatements" element={<BankStatements />} />
+          <Route path="/paystubs" element={<PayStubs />} />
+          <Route path="/bills" element={<Bills />} />
+          <Route path="/creditcards" element={<CreditCards />} />
+          <Route path="/passport" element={<Passport />} />
+          <Route path="/socialsecurity" element={<SocialSecurity />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Toaster />

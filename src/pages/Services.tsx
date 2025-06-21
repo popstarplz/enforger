@@ -16,32 +16,32 @@ const Services = () => {
     {
       name: "Bank Statements",
       price: "$35",
-      link: "/services"
+      link: "/bankstatements"
     },
     {
       name: "Pay Stubs",
       price: "$25",
-      link: "/services"
+      link: "/paystubs"
     },
     {
       name: "Bills (electricity, gas, water, internet)",
       price: "$20",
-      link: "/services"
+      link: "/bills"
     },
     {
       name: "Credit Cards",
       price: "$40",
-      link: "/services"
+      link: "/creditcards"
     },
     {
       name: "USA Passport (2021)",
       price: "$65",
-      link: "/services"
+      link: "/passport"
     },
     {
       name: "Social Security Card",
       price: "$30",
-      link: "/services"
+      link: "/socialsecurity"
     }
   ];
 
@@ -60,7 +60,7 @@ const Services = () => {
           
           <div className="container mx-auto px-4 text-center relative z-10">
             <h1 className="text-5xl md:text-6xl font-bold text-green-500 mb-6 glow-text">
-              System <span className="text-green-400">Access</span>
+              <span className="text-green-400">Services</span>
             </h1>
             <p className="text-xl text-green-400/80 max-w-3xl mx-auto leading-relaxed">
               Advanced document creation protocols. Choose your access level.
