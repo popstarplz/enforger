@@ -1,20 +1,62 @@
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import DocumentPreview from '@/components/DocumentPreview';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FileText, Shield, Zap, Download } from 'lucide-react';
 
 const Services = () => {
+  const navigate = useNavigate();
+
   const customServices = [
-    { name: "US State Drivers License", price: "$18", link: "/driverslicense" },
-    { name: "USA Passport (2021)", price: "$20", link: "/passport" },
-    { name: "Bank Statements", price: "$15", link: "/bankstatements" },
-    { name: "Credit Cards", price: "$16", link: "/creditcards" },
-    { name: "Pay Stubs", price: "$12", link: "/paystubs" },
-    { name: "Social Security Card", price: "$14", link: "/socialsecurity" },
-    { name: "Bills (electricity, gas, water, internet)", price: "$10", link: "/bills" }
+    { 
+      name: "US State Drivers License", 
+      price: "$18", 
+      link: "/driverslicense",
+      previewImage: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800&h=600&fit=crop"
+    },
+    { 
+      name: "USA Passport (2021)", 
+      price: "$20", 
+      link: "/passport",
+      previewImage: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&h=600&fit=crop"
+    },
+    { 
+      name: "Bank Statements", 
+      price: "$15", 
+      link: "/bankstatements",
+      previewImage: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=600&fit=crop"
+    },
+    { 
+      name: "Credit Cards", 
+      price: "$16", 
+      link: "/creditcards",
+      previewImage: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=800&h=600&fit=crop"
+    },
+    { 
+      name: "Pay Stubs", 
+      price: "$12", 
+      link: "/paystubs",
+      previewImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop"
+    },
+    { 
+      name: "Social Security Card", 
+      price: "$14", 
+      link: "/socialsecurity",
+      previewImage: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800&h=600&fit=crop"
+    },
+    { 
+      name: "Bills (electricity, gas, water, internet)", 
+      price: "$10", 
+      link: "/bills",
+      previewImage: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&h=600&fit=crop"
+    }
   ];
+
+  const handleOrderClick = (link: string) => {
+    navigate(link);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-purple-950 text-green-400">
@@ -50,45 +92,51 @@ const Services = () => {
                 Custom <span className="text-purple-400">Documents</span>
               </h2>
               <p className="text-green-400/70 max-w-xl mx-auto">
-                Choose from our professional document generation services
+                Choose from our professional document generation services. Preview samples below.
               </p>
             </div>
 
-            <div className="max-w-4xl mx-auto">
-              <div className="bg-gray-900/50 backdrop-blur-sm border border-green-500/20 rounded-lg overflow-hidden">
-                {customServices.map((service, index) => (
-                  <div 
-                    key={index} 
-                    className={`flex items-center justify-between p-4 border-green-500/10 hover:bg-green-500/5 transition-all duration-300 group ${
-                      index !== customServices.length - 1 ? 'border-b' : ''
-                    }`}
-                  >
-                    <div className="flex items-center space-x-4">
-                      <div className="p-2 bg-green-500/10 rounded-lg">
-                        <FileText className="w-5 h-5 text-green-500" />
+            <div className="max-w-6xl mx-auto space-y-8">
+              {customServices.map((service, index) => (
+                <div 
+                  key={index} 
+                  className="bg-gray-900/50 backdrop-blur-sm border border-green-500/20 rounded-lg overflow-hidden"
+                >
+                  <div className="flex flex-col lg:flex-row">
+                    {/* Service Info */}
+                    <div className="lg:w-1/2 p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center space-x-4">
+                          <div className="p-2 bg-green-500/10 rounded-lg">
+                            <FileText className="w-5 h-5 text-green-500" />
+                          </div>
+                          <div>
+                            <h3 className="text-green-400 font-medium text-xl">
+                              {service.name}
+                            </h3>
+                            <span className="text-green-500 font-bold text-2xl">
+                              {service.price}
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <Button 
+                          onClick={() => handleOrderClick(service.link)}
+                          className="bg-green-500 text-black hover:bg-green-400 font-bold transition-all duration-300"
+                        >
+                          Order Now
+                        </Button>
                       </div>
-                      <div>
-                        <h3 className="text-green-400 font-medium text-lg group-hover:text-green-300 transition-colors">
-                          {service.name}
-                        </h3>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center space-x-4">
-                      <span className="text-green-500 font-bold text-xl">
-                        {service.price}
-                      </span>
-                      <Button 
-                        asChild
-                        size="sm"
-                        className="bg-green-500 text-black hover:bg-green-400 font-bold transition-all duration-300"
-                      >
-                        <Link to={service.link}>Order Now</Link>
-                      </Button>
+                      
+                      <DocumentPreview
+                        documentType={service.name}
+                        previewImage={service.previewImage}
+                        onOrderClick={() => handleOrderClick(service.link)}
+                      />
                     </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
