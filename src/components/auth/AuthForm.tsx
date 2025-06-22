@@ -1,9 +1,7 @@
 
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { AuthCaptcha } from './AuthCaptcha';
 
 interface AuthFormProps {
   isLogin: boolean;
@@ -26,12 +24,9 @@ export const AuthForm = ({
   password,
   confirmPassword,
   loading,
-  captchaToken,
   onEmailChange,
   onPasswordChange,
   onConfirmPasswordChange,
-  onCaptchaVerify,
-  onCaptchaExpired,
   onSubmit
 }: AuthFormProps) => {
   return (
@@ -76,15 +71,10 @@ export const AuthForm = ({
           />
         </div>
       )}
-
-      <AuthCaptcha 
-        onVerify={onCaptchaVerify}
-        onExpired={onCaptchaExpired}
-      />
       
       <Button 
         type="submit" 
-        disabled={loading || !captchaToken}
+        disabled={loading}
         className="w-full bg-green-500 text-black hover:bg-green-400 font-bold transition-all duration-300 disabled:opacity-50"
       >
         {loading ? 'Please wait...' : (isLogin ? 'Sign In' : 'Create Account')}

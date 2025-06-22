@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { DollarSign, Menu } from 'lucide-react';
+import { DollarSign, Menu, LogIn } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
@@ -30,6 +30,12 @@ const Header = () => {
                 >
                   Services
                 </Link>
+                <Link 
+                  to="/topup" 
+                  className="text-green-400/80 hover:text-green-400 transition-all duration-300 text-lg font-medium px-4 py-2 rounded-lg hover:bg-green-500/10"
+                >
+                  Top Up
+                </Link>
               </nav>
             </SheetContent>
           </Sheet>
@@ -44,16 +50,16 @@ const Header = () => {
             <span className="text-xl font-bold text-green-500 tracking-wider">ENFORGER</span>
           </Link>
 
-          {/* Top Up Button */}
+          {/* Login Button */}
           <div className="flex items-center space-x-4">
             <Button 
               asChild
               variant="outline" 
               className="border-green-500/50 text-green-400 hover:bg-green-500/10 hover:border-green-400 transition-all duration-300"
             >
-              <Link to="/topup">
-                <DollarSign className="w-4 h-4 mr-2" />
-                Top Up
+              <Link to="/login">
+                <LogIn className="w-4 h-4 mr-2" />
+                Login
               </Link>
             </Button>
           </div>

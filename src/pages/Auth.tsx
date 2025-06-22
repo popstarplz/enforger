@@ -66,33 +66,8 @@ const Auth = () => {
           </CardContent>
         </Card>
       </div>
-
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.handleCaptchaVerify = function(token) {
-              window.dispatchEvent(new CustomEvent('captcha-verified', { detail: token }));
-            };
-            window.handleCaptchaExpired = function() {
-              window.dispatchEvent(new CustomEvent('captcha-expired'));
-            };
-          `
-        }}
-      />
     </div>
   );
 };
-
-// Add type declarations for hCaptcha
-declare global {
-  interface Window {
-    hcaptcha: {
-      reset: () => void;
-      getResponse: () => string;
-    };
-    handleCaptchaVerify: (token: string) => void;
-    handleCaptchaExpired: () => void;
-  }
-}
 
 export default Auth;

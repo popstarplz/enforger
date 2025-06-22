@@ -23,7 +23,7 @@ function App() {
           <Route path="/" element={<Index />} />
           <Route path="/services" element={<Services />} />
           <Route path="/topup" element={<TopUp />} />
-          <Route path="/auth" element={<Auth />} />
+          <Route path="/login" element={<Auth />} />
           <Route path="/order" element={<Order />} />
           <Route path="/driverslicense" element={<DriversLicense />} />
           <Route path="/bankstatements" element={<BankStatements />} />

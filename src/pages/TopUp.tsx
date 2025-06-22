@@ -1,63 +1,48 @@
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
-import { User } from '@supabase/supabase-js';
 import { Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Wallet, Copy, CheckCircle } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import BalanceCard from '@/components/topup/BalanceCard';
-import AmountSelection from '@/components/topup/AmountSelection';
-import CryptoSelection from '@/components/topup/CryptoSelection';
-import PaymentDetails from '@/components/topup/PaymentDetails';
+import { useToast } from '@/hooks/use-toast';
 
 const TopUp = () => {
-  const [user, setUser] = useState<User | null>(null);
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
   const [selectedCrypto, setSelectedCrypto] = useState<string>('');
-  const [loading, setLoading] = useState(false);
   const [paymentAddress, setPaymentAddress] = useState<string>('');
-  const [balance, setBalance] = useState<number>(0);
+  const [copied, setCopied] = useState<string>('');
   const { toast } = useToast();
 
-  useEffect(() => {
-    checkUser();
-    fetchUserBalance();
-  }, []);
-
-  const checkUser = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      window.location.href = '/auth';
-      return;
+  const topUpAmounts = [10, 25, 50, 100, 250, 500];
+  
+  const cryptoCurrencies = [
+    { 
+      value: 'BTC', 
+      label: 'Bitcoin', 
+      icon: '₿', 
+      color: 'text-orange-400',
+      address: '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa'
+    },
+    { 
+      value: 'LTC', 
+      label: 'Litecoin', 
+      icon: 'Ł', 
+      color: 'text-blue-400',
+      address: 'LQTpS1gFKq4VGvs4d9GtBxLJN6GjMQCYa7'
+    },
+    { 
+      value: 'XMR', 
+      label: 'Monero', 
+      icon: 'ɱ', 
+      color: 'text-purple-400',
+      address: '44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A'
     }
-    setUser(user);
-  };
+  ];
 
-  const fetchUserBalance = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
-
-    const { data, error } = await supabase
-      .from('user_balances')
-      .select('balance')
-      .eq('user_id', user.id)
-      .single();
-
-    if (data) {
-      setBalance(data.balance);
-    } else if (error && error.code === 'PGRST116') {
-      await supabase
-        .from('user_balances')
-        .insert({ user_id: user.id, balance: 0 });
-      setBalance(0);
-    }
-  };
-
-  const generatePaymentAddress = async () => {
-    if (!selectedAmount || !selectedCrypto || !user) {
+  const generatePaymentAddress = () => {
+    if (!selectedAmount || !selectedCrypto) {
       toast({
         title: "Error",
         description: "Please select amount and cryptocurrency",
@@ -66,47 +51,24 @@ const TopUp = () => {
       return;
     }
 
-    setLoading(true);
-
-    try {
-      const { data: transaction, error } = await supabase
-        .from('topup_transactions')
-        .insert({
-          user_id: user.id,
-          amount: selectedAmount,
-          crypto_currency: selectedCrypto,
-          status: 'pending'
-        })
-        .select()
-        .single();
-
-      if (error) throw error;
-
-      // Mock addresses for demo
-      const mockAddresses = {
-        BTC: '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',
-        LTC: 'LQTpS1gFKq4VGvs4d9GtBxLJN6GjMQCYa7',
-        USDT: '0x742d35Cc6669B432c46C9e8B4D0f0f4F0D8F4A8C'
-      };
-
-      const address = mockAddresses[selectedCrypto as keyof typeof mockAddresses];
-      setPaymentAddress(address);
-
+    const crypto = cryptoCurrencies.find(c => c.value === selectedCrypto);
+    if (crypto) {
+      setPaymentAddress(crypto.address);
       toast({
-        title: "Payment Ready",
-        description: `Send exactly $${selectedAmount} worth of ${selectedCrypto} to complete your top-up`
+        title: "Payment Address Generated",
+        description: `Send exactly $${selectedAmount} worth of ${selectedCrypto} to the address below`,
       });
-
-    } catch (error) {
-      console.error('Error creating transaction:', error);
-      toast({
-        title: "Error",
-        description: "Failed to generate payment address",
-        variant: "destructive"
-      });
-    } finally {
-      setLoading(false);
     }
+  };
+
+  const copyToClipboard = (text: string, type: string) => {
+    navigator.clipboard.writeText(text);
+    setCopied(type);
+    toast({
+      title: "Copied!",
+      description: `${type} copied to clipboard`,
+    });
+    setTimeout(() => setCopied(''), 2000);
   };
 
   return (
@@ -128,37 +90,139 @@ const TopUp = () => {
           <h1 className="text-3xl font-bold text-green-500">Account Top-Up</h1>
         </div>
 
-        <BalanceCard balance={balance} />
+        {/* Current Balance */}
+        <Card className="bg-gray-900/50 backdrop-blur-sm border-green-500/30 mb-8">
+          <CardHeader>
+            <CardTitle className="flex items-center text-green-400">
+              <Wallet className="w-5 h-5 mr-2" />
+              Current Balance
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-green-500">$0.00</div>
+            <p className="text-green-400/70 mt-2">Add funds to your account using cryptocurrency</p>
+          </CardContent>
+        </Card>
 
         {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <AmountSelection 
-            selectedAmount={selectedAmount}
-            onAmountSelect={setSelectedAmount}
-          />
+          {/* Amount Selection */}
+          <Card className="bg-gray-900/50 backdrop-blur-sm border-green-500/30">
+            <CardHeader>
+              <CardTitle className="text-green-400">Select Amount (USD)</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 gap-3">
+                {topUpAmounts.map((amount) => (
+                  <Button
+                    key={amount}
+                    onClick={() => setSelectedAmount(amount)}
+                    variant={selectedAmount === amount ? "default" : "outline"}
+                    className={`${
+                      selectedAmount === amount
+                        ? "bg-green-500 text-black"
+                        : "bg-transparent border-green-500/50 text-green-400 hover:bg-green-500/10 hover:border-green-400"
+                    } transition-all duration-300`}
+                  >
+                    ${amount}
+                  </Button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
           
-          <CryptoSelection 
-            selectedCrypto={selectedCrypto}
-            onCryptoSelect={setSelectedCrypto}
-          />
+          {/* Crypto Selection */}
+          <Card className="bg-gray-900/50 backdrop-blur-sm border-green-500/30">
+            <CardHeader>
+              <CardTitle className="text-green-400">Select Cryptocurrency</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {cryptoCurrencies.map((crypto) => (
+                  <Button
+                    key={crypto.value}
+                    onClick={() => setSelectedCrypto(crypto.value)}
+                    variant={selectedCrypto === crypto.value ? "default" : "outline"}
+                    className={`w-full justify-start ${
+                      selectedCrypto === crypto.value
+                        ? "bg-green-500 text-black"
+                        : "bg-transparent border-green-500/50 text-green-400 hover:bg-green-500/10 hover:border-green-400"
+                    } transition-all duration-300`}
+                  >
+                    <span className={`${crypto.color} mr-3 text-lg`}>{crypto.icon}</span>
+                    {crypto.label} ({crypto.value})
+                  </Button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Generate Payment Button */}
         <div className="mt-8 text-center">
           <Button
             onClick={generatePaymentAddress}
-            disabled={!selectedAmount || !selectedCrypto || loading}
-            className="bg-green-500 text-black hover:bg-green-400 font-bold px-8 py-3 text-lg transition-all duration-300 hover:shadow-lg hover:shadow-green-500/25"
+            disabled={!selectedAmount || !selectedCrypto}
+            className="bg-green-500 text-black hover:bg-green-400 font-bold px-8 py-3 text-lg transition-all duration-300 hover:shadow-lg hover:shadow-green-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? "Generating..." : "Generate Payment Address"}
+            Generate Payment Address
           </Button>
         </div>
 
-        <PaymentDetails 
-          selectedAmount={selectedAmount}
-          selectedCrypto={selectedCrypto}
-          paymentAddress={paymentAddress}
-        />
+        {/* Payment Details */}
+        {paymentAddress && (
+          <Card className="bg-gray-900/70 backdrop-blur-sm border-green-500/50 mt-8">
+            <CardHeader>
+              <CardTitle className="flex items-center text-green-400">
+                <CheckCircle className="w-5 h-5 mr-2" />
+                Payment Instructions
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <span className="text-green-400/70">Amount:</span>
+                  <span className="ml-2 text-green-400 font-semibold">${selectedAmount} USD</span>
+                </div>
+                <div>
+                  <span className="text-green-400/70">Currency:</span>
+                  <span className="ml-2 text-green-400 font-semibold">{selectedCrypto}</span>
+                </div>
+              </div>
+              
+              <div>
+                <span className="text-green-400/70 text-sm">Payment Address:</span>
+                <div className="mt-2 p-4 bg-black/50 border border-green-500/30 rounded-lg flex items-center justify-between">
+                  <code className="text-green-400 break-all text-sm font-mono mr-2">{paymentAddress}</code>
+                  <Button
+                    onClick={() => copyToClipboard(paymentAddress, 'Address')}
+                    variant="ghost"
+                    size="sm"
+                    className="text-green-400 hover:bg-green-500/10 flex-shrink-0"
+                  >
+                    {copied === 'Address' ? <CheckCircle className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                  </Button>
+                </div>
+              </div>
+              
+              <div className="text-green-400/60 text-sm p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+                <div className="font-semibold mb-2">⚠️ Important Instructions:</div>
+                <ul className="space-y-1 list-disc list-inside">
+                  <li>Send exactly ${selectedAmount} worth of {selectedCrypto} to this address</li>
+                  <li>Your account will be credited once the transaction is confirmed</li>
+                  <li>Confirmation time varies by network (BTC: ~30min, LTC: ~10min, XMR: ~20min)</li>
+                  <li>Do not send any other cryptocurrency to this address</li>
+                </ul>
+              </div>
+
+              <div className="text-center pt-4">
+                <p className="text-green-400/80 text-sm">
+                  Need help? Contact support with your transaction ID once payment is sent.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        )}
       </div>
       
       <Footer />

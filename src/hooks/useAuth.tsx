@@ -33,30 +33,12 @@ export const useAuth = () => {
     setCaptchaToken(null);
   };
 
-  const resetCaptcha = () => {
-    setCaptchaToken(null);
-    if (window.hcaptcha) {
-      window.hcaptcha.reset();
-    }
-  };
-
   const toggleAuthMode = () => {
     setIsLogin(!isLogin);
-    resetCaptcha();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!captchaToken) {
-      toast({
-        title: "CAPTCHA Required",
-        description: "Please complete the CAPTCHA verification.",
-        variant: "destructive",
-      });
-      return;
-    }
-
     setLoading(true);
 
     try {
@@ -65,9 +47,6 @@ export const useAuth = () => {
         const { error } = await supabase.auth.signInWithPassword({
           email,
           password,
-          options: {
-            captchaToken,
-          }
         });
 
         if (error) {
@@ -76,7 +55,6 @@ export const useAuth = () => {
             description: error.message,
             variant: "destructive",
           });
-          resetCaptcha();
         } else {
           toast({
             title: "Success!",
@@ -101,7 +79,6 @@ export const useAuth = () => {
           password,
           options: {
             emailRedirectTo: `${window.location.origin}/`,
-            captchaToken,
           }
         });
 
@@ -111,7 +88,6 @@ export const useAuth = () => {
             description: error.message,
             variant: "destructive",
           });
-          resetCaptcha();
         } else {
           toast({
             title: "Success!",
@@ -125,7 +101,6 @@ export const useAuth = () => {
         description: "Please try again later.",
         variant: "destructive",
       });
-      resetCaptcha();
     } finally {
       setLoading(false);
     }
