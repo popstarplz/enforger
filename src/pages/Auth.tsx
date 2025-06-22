@@ -15,6 +15,7 @@ const Auth = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -27,10 +28,43 @@ const Auth = () => {
       }
     };
     checkAuth();
+
+    // Load hCaptcha script
+    const script = document.createElement('script');
+    script.src = 'https://js.hcaptcha.com/1/api.js';
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+
+    return () => {
+      // Cleanup script when component unmounts
+      const existingScript = document.querySelector('script[src="https://js.hcaptcha.com/1/api.js"]');
+      if (existingScript) {
+        document.head.removeChild(existingScript);
+      }
+    };
   }, [navigate]);
+
+  const handleCaptchaVerify = (token: string) => {
+    setCaptchaToken(token);
+  };
+
+  const handleCaptchaExpired = () => {
+    setCaptchaToken(null);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!captchaToken) {
+      toast({
+        title: "CAPTCHA Required",
+        description: "Please complete the CAPTCHA verification.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -39,6 +73,9 @@ const Auth = () => {
         const { error } = await supabase.auth.signInWithPassword({
           email,
           password,
+          options: {
+            captchaToken,
+          }
         });
 
         if (error) {
@@ -47,6 +84,11 @@ const Auth = () => {
             description: error.message,
             variant: "destructive",
           });
+          // Reset captcha on error
+          setCaptchaToken(null);
+          if (window.hcaptcha) {
+            window.hcaptcha.reset();
+          }
         } else {
           toast({
             title: "Success!",
@@ -70,7 +112,8 @@ const Auth = () => {
           email,
           password,
           options: {
-            emailRedirectTo: `${window.location.origin}/`
+            emailRedirectTo: `${window.location.origin}/`,
+            captchaToken,
           }
         });
 
@@ -80,6 +123,11 @@ const Auth = () => {
             description: error.message,
             variant: "destructive",
           });
+          // Reset captcha on error
+          setCaptchaToken(null);
+          if (window.hcaptcha) {
+            window.hcaptcha.reset();
+          }
         } else {
           toast({
             title: "Success!",
@@ -93,6 +141,11 @@ const Auth = () => {
         description: "Please try again later.",
         variant: "destructive",
       });
+      // Reset captcha on error
+      setCaptchaToken(null);
+      if (window.hcaptcha) {
+        window.hcaptcha.reset();
+      }
     } finally {
       setLoading(false);
     }
@@ -177,11 +230,23 @@ const Auth = () => {
                   />
                 </div>
               )}
+
+              {/* CAPTCHA */}
+              <div className="space-y-2">
+                <Label className="text-green-400">Security Verification</Label>
+                <div 
+                  className="h-captcha bg-gray-800/50 rounded-lg p-4 border border-green-500/30" 
+                  data-hcaptcha="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                  data-callback="handleCaptchaVerify"
+                  data-expired-callback="handleCaptchaExpired"
+                  data-theme="dark"
+                ></div>
+              </div>
               
               <Button 
                 type="submit" 
-                disabled={loading}
-                className="w-full bg-green-500 text-black hover:bg-green-400 font-bold transition-all duration-300"
+                disabled={loading || !captchaToken}
+                className="w-full bg-green-500 text-black hover:bg-green-400 font-bold transition-all duration-300 disabled:opacity-50"
               >
                 {loading ? 'Please wait...' : (isLogin ? 'Sign In' : 'Create Account')}
               </Button>
@@ -189,7 +254,13 @@ const Auth = () => {
             
             <div className="mt-6 text-center">
               <button
-                onClick={() => setIsLogin(!isLogin)}
+                onClick={() => {
+                  setIsLogin(!isLogin);
+                  setCaptchaToken(null);
+                  if (window.hcaptcha) {
+                    window.hcaptcha.reset();
+                  }
+                }}
                 className="text-purple-400 hover:text-purple-300 font-medium transition-colors"
               >
                 {isLogin 
@@ -201,8 +272,44 @@ const Auth = () => {
           </CardContent>
         </Card>
       </div>
+
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.handleCaptchaVerify = function(token) {
+              window.dispatchEvent(new CustomEvent('captcha-verified', { detail: token }));
+            };
+            window.handleCaptchaExpired = function() {
+              window.dispatchEvent(new CustomEvent('captcha-expired'));
+            };
+          `
+        }}
+      />
     </div>
   );
 };
+
+// Add event listeners for CAPTCHA callbacks
+if (typeof window !== 'undefined') {
+  window.addEventListener('captcha-verified', (event: any) => {
+    // This will be handled by the component's state
+  });
+  
+  window.addEventListener('captcha-expired', () => {
+    // This will be handled by the component's state
+  });
+}
+
+// Add type declarations for hCaptcha
+declare global {
+  interface Window {
+    hcaptcha: {
+      reset: () => void;
+      getResponse: () => string;
+    };
+    handleCaptchaVerify: (token: string) => void;
+    handleCaptchaExpired: () => void;
+  }
+}
 
 export default Auth;
