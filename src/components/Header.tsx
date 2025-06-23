@@ -1,12 +1,15 @@
 
 import { Link } from 'react-router-dom';
-import { DollarSign, Menu, LogIn } from 'lucide-react';
+import { DollarSign, Menu, LogIn, Wallet } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 const Header = () => {
+  // TODO: This should be connected to actual user balance from Supabase
+  const userBalance = 0.00; // Placeholder - will be replaced with real balance
+
   return (
-    <header className="bg-black border-b border-green-500/20 backdrop-blur-sm">
+    <header className="bg-black border-b border-green-500/20 backdrop-blur-sm fixed top-0 left-0 right-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Left Sidebar Navigation */}
@@ -36,6 +39,12 @@ const Header = () => {
                 >
                   Top Up
                 </Link>
+                <Link 
+                  to="/order" 
+                  className="text-green-400/80 hover:text-green-400 transition-all duration-300 text-lg font-medium px-4 py-2 rounded-lg hover:bg-green-500/10"
+                >
+                  My Orders
+                </Link>
               </nav>
             </SheetContent>
           </Sheet>
@@ -50,11 +59,32 @@ const Header = () => {
             <span className="text-xl font-bold text-green-500 tracking-wider">ENFORGER</span>
           </Link>
 
-          {/* Login Button */}
+          {/* Right side - Balance and Login */}
           <div className="flex items-center space-x-4">
+            {/* Balance Display */}
+            <div className="flex items-center space-x-2 bg-gray-900/50 border border-green-500/30 rounded-lg px-3 py-2">
+              <Wallet className="w-4 h-4 text-green-400" />
+              <span className="text-green-400 font-semibold">${userBalance.toFixed(2)}</span>
+            </div>
+            
+            {/* Top Up Button */}
             <Button 
               asChild
               variant="outline" 
+              size="sm"
+              className="border-green-500/50 text-green-400 hover:bg-green-500/10 hover:border-green-400 transition-all duration-300"
+            >
+              <Link to="/topup">
+                <DollarSign className="w-4 h-4 mr-1" />
+                Top Up
+              </Link>
+            </Button>
+
+            {/* Login Button */}
+            <Button 
+              asChild
+              variant="outline" 
+              size="sm"
               className="border-green-500/50 text-green-400 hover:bg-green-500/10 hover:border-green-400 transition-all duration-300"
             >
               <Link to="/login">

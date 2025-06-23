@@ -62,7 +62,7 @@ const Services = () => {
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-purple-950 text-green-400">
       <Header />
       
-      <main className="pt-20">
+      <main className="pt-16">
         {/* Hero Section */}
         <section className="py-16 bg-gradient-to-br from-black via-gray-900 to-purple-950 relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">

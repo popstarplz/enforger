@@ -1,122 +1,229 @@
 
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ArrowLeft, FileText, Upload, DollarSign } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Shield, MapPin } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 const DriversLicense = () => {
-  const [selectedState, setSelectedState] = useState('');
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const [formData, setFormData] = useState({
+    fullName: '',
+    dateOfBirth: '',
+    address: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    licenseNumber: '',
+    expirationDate: '',
+    photo: null as File | null
+  });
 
-  const usStates = [
-    'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 
-    'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 
-    'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 
-    'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 
-    'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 
-    'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 
-    'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-  ];
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
 
-  const handleContinue = () => {
-    if (selectedState) {
-      // Navigate to order form with selected state
-      console.log('Selected state:', selectedState);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFormData(prev => ({ ...prev, photo: e.target.files![0] }));
     }
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast({
+      title: "Order Submitted",
+      description: "Your driver's license order has been submitted for processing.",
+    });
+    navigate('/order');
+  };
+
   return (
-    <div className="min-h-screen bg-black text-green-400">
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-purple-950 text-green-400">
       <Header />
       
-      <main className="pt-20">
-        {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-br from-black via-gray-900 to-black relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-green-500/20 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-green-500/10 rounded-full blur-3xl"></div>
-          </div>
-          
-          <div className="container mx-auto px-4 text-center relative z-10">
-            <h1 className="text-5xl md:text-6xl font-bold text-green-500 mb-6 glow-text">
-              State <span className="text-green-400">Selection</span>
-            </h1>
-            <p className="text-xl text-green-400/80 max-w-3xl mx-auto leading-relaxed">
-              Choose your target state for document generation protocol
-            </p>
-          </div>
-        </section>
+      <div className="relative z-10 max-w-4xl mx-auto px-4 py-12">
+        <div className="flex items-center mb-8">
+          <Link to="/services" className="text-green-400 hover:text-green-300 mr-4">
+            <ArrowLeft className="w-6 h-6" />
+          </Link>
+          <h1 className="text-3xl font-bold text-green-500">US State Driver's License</h1>
+        </div>
 
-        {/* State Selection */}
-        <section className="py-20 bg-gradient-to-b from-black to-gray-950 relative">
-          <div className="absolute inset-0 opacity-5">
-            <div className="absolute top-1/3 left-1/3 w-72 h-72 bg-green-500/20 rounded-full blur-3xl"></div>
-          </div>
-          
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-2xl mx-auto">
-              <Card className="bg-gray-900/50 backdrop-blur-sm border-green-500/30 hover:border-green-500/60 transition-all duration-300">
-                <CardContent className="p-8">
-                  <div className="flex items-center mb-6">
-                    <Shield className="w-8 h-8 text-green-500 mr-3" />
-                    <h2 className="text-2xl font-bold text-green-400">
-                      US State Drivers License
-                    </h2>
-                  </div>
-                  
-                  <p className="text-green-400/70 mb-8 leading-relaxed">
-                    Select the state for your drivers license document. Each state template includes authentic design elements and security features.
-                  </p>
-
-                  <div className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2">
+            <Card className="bg-gray-900/50 backdrop-blur-sm border-green-500/30">
+              <CardHeader>
+                <CardTitle className="flex items-center text-green-400">
+                  <FileText className="w-5 h-5 mr-2" />
+                  License Information
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="state-select" className="block text-green-400 font-medium mb-3">
-                        <MapPin className="w-4 h-4 inline mr-2" />
-                        Select State
-                      </label>
-                      <Select value={selectedState} onValueChange={setSelectedState}>
-                        <SelectTrigger className="w-full bg-gray-800/50 border-green-500/30 text-green-400 hover:border-green-500/60 focus:border-green-500">
-                          <SelectValue placeholder="Choose a state..." />
+                      <Label htmlFor="fullName" className="text-green-400">Full Name</Label>
+                      <Input
+                        id="fullName"
+                        value={formData.fullName}
+                        onChange={(e) => handleInputChange('fullName', e.target.value)}
+                        className="bg-gray-900/50 border-green-500/30 text-green-400"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="dateOfBirth" className="text-green-400">Date of Birth</Label>
+                      <Input
+                        id="dateOfBirth"
+                        type="date"
+                        value={formData.dateOfBirth}
+                        onChange={(e) => handleInputChange('dateOfBirth', e.target.value)}
+                        className="bg-gray-900/50 border-green-500/30 text-green-400"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="address" className="text-green-400">Address</Label>
+                    <Input
+                      id="address"
+                      value={formData.address}
+                      onChange={(e) => handleInputChange('address', e.target.value)}
+                      className="bg-gray-900/50 border-green-500/30 text-green-400"
+                      required
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <Label htmlFor="city" className="text-green-400">City</Label>
+                      <Input
+                        id="city"
+                        value={formData.city}
+                        onChange={(e) => handleInputChange('city', e.target.value)}
+                        className="bg-gray-900/50 border-green-500/30 text-green-400"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="state" className="text-green-400">State</Label>
+                      <Select onValueChange={(value) => handleInputChange('state', value)}>
+                        <SelectTrigger className="bg-gray-900/50 border-green-500/30 text-green-400">
+                          <SelectValue placeholder="Select State" />
                         </SelectTrigger>
-                        <SelectContent className="bg-gray-900 border-green-500/30 text-green-400 max-h-60">
-                          {usStates.map((state) => (
-                            <SelectItem 
-                              key={state} 
-                              value={state}
-                              className="hover:bg-green-500/10 focus:bg-green-500/10"
-                            >
-                              {state}
-                            </SelectItem>
-                          ))}
+                        <SelectContent>
+                          <SelectItem value="CA">California</SelectItem>
+                          <SelectItem value="NY">New York</SelectItem>
+                          <SelectItem value="TX">Texas</SelectItem>
+                          <SelectItem value="FL">Florida</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
-
-                    {selectedState && (
-                      <div className="p-4 bg-green-500/10 border border-green-500/30 rounded-lg">
-                        <p className="text-green-400 text-sm">
-                          <Shield className="w-4 h-4 inline mr-2" />
-                          Selected: {selectedState} Drivers License Template
-                        </p>
-                      </div>
-                    )}
-
-                    <Button 
-                      onClick={handleContinue}
-                      disabled={!selectedState}
-                      className="bg-green-500 text-black hover:bg-green-400 font-bold w-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      Continue to Order Form
-                    </Button>
+                    <div>
+                      <Label htmlFor="zipCode" className="text-green-400">ZIP Code</Label>
+                      <Input
+                        id="zipCode"
+                        value={formData.zipCode}
+                        onChange={(e) => handleInputChange('zipCode', e.target.value)}
+                        className="bg-gray-900/50 border-green-500/30 text-green-400"
+                        required
+                      />
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
-            </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="licenseNumber" className="text-green-400">License Number (Optional)</Label>
+                      <Input
+                        id="licenseNumber"
+                        value={formData.licenseNumber}
+                        onChange={(e) => handleInputChange('licenseNumber', e.target.value)}
+                        className="bg-gray-900/50 border-green-500/30 text-green-400"
+                        placeholder="Leave blank for random"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="expirationDate" className="text-green-400">Expiration Date</Label>
+                      <Input
+                        id="expirationDate"
+                        type="date"
+                        value={formData.expirationDate}
+                        onChange={(e) => handleInputChange('expirationDate', e.target.value)}
+                        className="bg-gray-900/50 border-green-500/30 text-green-400"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="photo" className="text-green-400">Photo Upload</Label>
+                    <div className="mt-2 flex items-center space-x-4">
+                      <Input
+                        id="photo"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        className="bg-gray-900/50 border-green-500/30 text-green-400"
+                        required
+                      />
+                      <Upload className="w-5 h-5 text-green-400" />
+                    </div>
+                  </div>
+
+                  <Button
+                    type="submit"
+                    className="w-full bg-green-500 text-black hover:bg-green-400 font-bold py-3"
+                  >
+                    Submit Order - $18.00
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
           </div>
-        </section>
-      </main>
+
+          <div>
+            <Card className="bg-gray-900/50 backdrop-blur-sm border-green-500/30">
+              <CardHeader>
+                <CardTitle className="flex items-center text-green-400">
+                  <DollarSign className="w-5 h-5 mr-2" />
+                  Order Summary
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex justify-between">
+                    <span className="text-green-400/70">Document Type:</span>
+                    <span className="text-green-400">Driver's License</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-green-400/70">Processing Time:</span>
+                    <span className="text-green-400">24-48 hours</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-green-400/70">Delivery:</span>
+                    <span className="text-green-400">Digital Download</span>
+                  </div>
+                  <div className="border-t border-green-500/30 pt-4">
+                    <div className="flex justify-between text-lg font-bold">
+                      <span className="text-green-400">Total:</span>
+                      <span className="text-green-500">$18.00</span>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
       
       <Footer />
     </div>
