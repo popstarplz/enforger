@@ -2,6 +2,14 @@
 import { useEffect } from 'react';
 import { Label } from '@/components/ui/label';
 
+// Extend the Window interface to include hCaptcha callbacks
+declare global {
+  interface Window {
+    handleCaptchaVerify: (token: string) => void;
+    handleCaptchaExpired: () => void;
+  }
+}
+
 interface AuthCaptchaProps {
   onVerify: (token: string) => void;
   onExpired: () => void;
