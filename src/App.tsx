@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from '@/components/ui/toaster';
 import Index from '@/pages/Index';
 import Services from '@/pages/Services';
+import Templates from '@/pages/Templates';
 import TopUp from '@/pages/TopUp';
 import Auth from '@/pages/Auth';
 import Order from '@/pages/Order';
@@ -22,6 +23,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/templates" element={<Templates />} />
           <Route path="/topup" element={<TopUp />} />
           <Route path="/login" element={<Auth />} />
           <Route path="/order" element={<Order />} />

@@ -34,6 +34,12 @@ const Header = () => {
                   Services
                 </Link>
                 <Link 
+                  to="/templates" 
+                  className="text-green-400/80 hover:text-green-400 transition-all duration-300 text-lg font-medium px-4 py-2 rounded-lg hover:bg-green-500/10"
+                >
+                  Templates
+                </Link>
+                <Link 
                   to="/topup" 
                   className="text-green-400/80 hover:text-green-400 transition-all duration-300 text-lg font-medium px-4 py-2 rounded-lg hover:bg-green-500/10"
                 >
