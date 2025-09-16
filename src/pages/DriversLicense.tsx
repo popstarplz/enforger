@@ -210,23 +210,84 @@ const DriversLicense = () => {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-green-400/70">Delivery:</span>
-                    <span className="text-green-400">Digital Download</span>
-                  </div>
-                  <div className="border-t border-green-500/30 pt-4">
-                    <div className="flex justify-between text-lg font-bold">
-                      <span className="text-green-400">Total:</span>
-                      <span className="text-green-500">$18.00</span>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </div>
-      
-      <Footer />
-    </div>
+  const fields = [
+    { 
+      name: 'fullName', 
+      label: 'Full Name', 
+      type: 'text' as const, 
+      required: true,
+      priority: 'high' as const,
+      tooltip: 'Enter your full legal name as it should appear on the license'
+    },
+    { 
+      name: 'dateOfBirth', 
+      label: 'Date of Birth', 
+      type: 'date' as const, 
+      required: true,
+      priority: 'high' as const
+    },
+    { 
+      name: 'address', 
+      label: 'Street Address', 
+      type: 'text' as const, 
+      required: true,
+      priority: 'high' as const,
+      placeholder: '123 Main Street'
+    },
+    { 
+      name: 'city', 
+      label: 'City', 
+      type: 'text' as const, 
+      required: true,
+      priority: 'high' as const
+    },
+    { 
+      name: 'state', 
+      label: 'State', 
+      type: 'select' as const, 
+      required: true,
+      priority: 'high' as const,
+      options: ['CA', 'NY', 'TX', 'FL', 'IL', 'PA', 'OH', 'GA', 'NC', 'MI'],
+      defaultValue: 'CA'
+    },
+    { 
+      name: 'zipCode', 
+      label: 'ZIP Code', 
+      type: 'text' as const, 
+      required: true,
+      priority: 'high' as const,
+      validation: {
+        pattern: '^\\d{5}(-\\d{4})?$',
+        message: 'Please enter a valid ZIP code (12345 or 12345-6789)'
+      }
+    },
+    { 
+      name: 'licenseNumber', 
+      label: 'License Number', 
+      type: 'text' as const, 
+      required: false,
+      priority: 'low' as const,
+      placeholder: 'Leave blank for auto-generated number',
+      tooltip: 'If left blank, we\'ll generate a realistic license number for you'
+    },
+    { 
+      name: 'expirationDate', 
+      label: 'Expiration Date', 
+      type: 'date' as const, 
+      required: true,
+      priority: 'medium' as const,
+      tooltip: 'Most licenses are valid for 5-8 years from issue date'
+    }
+  ];
+
+  return (
+    <DocumentOrderPage
+      title="US State Driver's License"
+      price="$18.00"
+      description="Professional USA driver's license documents with authentic design elements"
+      fields={fields}
+      requiresPhoto={true}
+    />
   );
 };
 
