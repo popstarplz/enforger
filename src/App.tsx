@@ -25,7 +25,7 @@ function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/templates" element={<Templates />} />
           <Route path="/topup" element={<TopUp />} />
-          <Route path="/login" element={<Auth />} />
+          <Route path="/auth" element={<Auth />} />
           <Route path="/order" element={<Order />} />
           <Route path="/driverslicense" element={<DriversLicense />} />
           <Route path="/bankstatements" element={<BankStatements />} />
